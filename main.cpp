@@ -1,89 +1,219 @@
 #include <SFML/Graphics.hpp>
-
 #include <iostream>
-#include <string>
+#include <vector>
+#include <optional>
+#include <algorithm>
+#include <cstdlib>
 
 #include "WwiseWrapper.h"
 
 int main()
 {
-	WwiseWrapper wwise;
+    //Git Test
+    WwiseWrapper wwise;
 
-	//--Wwise code--------------------------------------------------------------
-	//TODO: We pass in the soundbank path here. You will probably need to update
-	//		this for your code.
-	//Note: Wwise expects wide strings when loading soundbanks on Windows. The
-	//		AKTEXT macro converts our soundbank path to the correct string type
-	//		for the current platform.
-	if (!wwise.initSoundEngine(AKTEXT("SFML Wwise Project/GeneratedSoundBanks/Windows")))
-	{
-		std::cout << "Could not initialise Wwise. Exiting." << std::endl;
-		return 1;
-	}
+    // ---------------- WWISE INIT ----------------
+    if (!wwise.initSoundEngine(AKTEXT("SFML Wwise Project/GeneratedSoundBanks/Windows")))
+    {
+        std::cout << "Could not initialise Wwise. Exiting." << std::endl;
+        return 1;
+    }
 
-	//TODO: This code loads the "MainSoundbank" from the included Wwise project;
-	//		you will probably want to replace it with your own soundbank.
-	{
-		AkBankID mainBankId;
-		if (AK::SoundEngine::LoadBank(AKTEXT("MainSoundbank"), mainBankId) != AK_Success)
-		{
-			assert(!"Could not load soundbank.");
-			return 1;
-		}
-	}
+    AkBankID mainBankId;
+    if (AK::SoundEngine::LoadBank(AKTEXT("MainSoundbank"), mainBankId) != AK_Success)
+    {
+        std::cout << "Could not load soundbank." << std::endl;
+        return 1;
+    }
 
-	//TODO: This code tests event posting using the Loop event from the included
-	//		Wwise project. You will want to remove it for your own projects.
-	{
-		const uint64_t gameObjectId = 1;
+    const uint64_t playerID = 1;
+    AK::SoundEngine::RegisterGameObj(playerID);
 
-		//In order to post an event in Wwise it must be associated with a game
-		//object. To Wwise, game objects are just a set of unique integer IDs,
-		//but you will need to register each game object with Wwise so that it
-		//is aware of them.
+    // ---------------- WINDOW ----------------
+    sf::RenderWindow window(sf::VideoMode({ 800, 400 }), "Geometry Dash Prototype");
+    window.setFramerateLimit(60);
 
-		//For testing purposes we just register a single ID of 1 here, but in
-		//your own projects you will probably want to implement your own unique
-		//ID system.
+    // ---------------- PLAYER ----------------
+    sf::RectangleShape player({ 40, 40 });
+    player.setFillColor(sf::Color::Cyan);
+    player.setPosition({ 100, 300 });
 
-		//Note that the Wwise listener is also a game object. This project
-		//assigns the listener with an ID of 0, hence the ID of 1 for our loop.
-		AK::SoundEngine::RegisterGameObj(gameObjectId);
+    float velocityY = 0;
+    const float gravity = 2000.f;
+    const float jumpForce = -700.f;
+    bool onGround = true;
 
-		AK::SoundEngine::PostEvent(AKTEXT("Loop"), gameObjectId);
-	}
-	//--------------------------------------------------------------------------
+    // ---------------- FLOOR ----------------
+    sf::RectangleShape floor({ 800, 40 });
+    floor.setPosition({ 0, 340 });
+    floor.setFillColor(sf::Color(100, 100, 100));
 
-	sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+    // ---------------- OBSTACLES ----------------
+    std::vector<sf::RectangleShape> obstacles;
 
-	while (window.isOpen())
-	{
-		while (const std::optional event = window.pollEvent())
-		{
-			if (event->is<sf::Event::Closed>())
-				window.close();
-			else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
-			{
-				if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
-					window.close();
-			}
-		}
+    float obstacleTimer = -1.5f;
+    float obstacleSpawnTime = 2.0f;
+    float obstacleSpeed = 300.f;
 
-		//--Wwise code----------------------------------------------------------
-		//Handle Wwise's audio rendering.
-		AK::SoundEngine::RenderAudio();
-		//----------------------------------------------------------------------
+    // ---------------- GAME SPEED ----------------
+    float gameSpeed = 1.0f;
+    const float maxSpeed = 5.0f;
+    const float speedIncreaseRate = 0.01f;
 
-		window.clear();
-		window.draw(shape);
-		window.display();
-	}
+    // ---------------- FONT ----------------
+    sf::Font font;
 
-	//--Wwise code--------------------------------------------------------------
-	wwise.terminateSoundEngine();
-	//--------------------------------------------------------------------------
+    if (!font.openFromFile("C:/Users/Alexo/source/repos/AlexOnions/SFML-Wwise-Project/SFML Wwise Project/Assets/arial.ttf"))
+    {
+        std::cout << "Failed to load font\n";
+    }
 
-	return 0;
+    // ---------------- SPEED TEXT ----------------
+    sf::Text speedText(font);
+    speedText.setCharacterSize(20);
+    speedText.setFillColor(sf::Color::White);
+
+    // ---------------- SCORE TEXT ----------------
+    float score = 0.f;
+    float scoreIncreaseAmount = 5;
+
+    sf::Text scoreText(font);
+    scoreText.setCharacterSize(20);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setPosition({ 10, 10 });
+
+    // ---------------- CLOCK ----------------
+    sf::Clock clock;
+
+    // ---------------- GAME LOOP ----------------
+    while (window.isOpen())
+    {
+        float deltaTime = clock.restart().asSeconds();
+
+        // -------- SCORE UPDATE --------
+        score += deltaTime * scoreIncreaseAmount; 
+        scoreText.setString("Score: " + std::to_string((int)score));
+
+        // -------- SPEED UPDATE --------
+        gameSpeed += deltaTime * speedIncreaseRate;
+        if (gameSpeed > maxSpeed)
+            gameSpeed = maxSpeed;
+
+        speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
+        speedText.setPosition({ 650, 10 });
+
+        // -------- EVENTS --------
+        while (const std::optional event = window.pollEvent())
+        {
+            if (event->is<sf::Event::Closed>())
+                window.close();
+
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                    window.close();
+
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Space && onGround)
+                {
+                    velocityY = jumpForce;
+                    onGround = false;
+
+                    AK::SoundEngine::PostEvent(AKTEXT("Jump"), playerID);
+                }
+            }
+        }
+
+        // -------- PHYSICS --------
+        velocityY += gravity * deltaTime;
+        player.move({ 0, velocityY * deltaTime });
+
+        if (player.getPosition().y >= 300)
+        {
+            player.setPosition({ 100, 300 });
+            velocityY = 0;
+            onGround = true;
+        }
+
+        // -------- SPAWN OBSTACLES --------
+        obstacleTimer += deltaTime * gameSpeed;
+
+        if (obstacleTimer > obstacleSpawnTime)
+        {
+            obstacleTimer = 0;
+
+            sf::RectangleShape obstacle;
+
+            int type = rand() % 3;
+
+            if (type == 0)
+            {
+                obstacle.setSize({ 20, 70 });
+                obstacle.setFillColor(sf::Color::Yellow);
+            }
+            else if (type == 1)
+            {
+                obstacle.setSize({ 50, 50 });
+                obstacle.setFillColor(sf::Color::Red);
+            }
+            else
+            {
+                obstacle.setSize({ 80, 30 });
+                obstacle.setFillColor(sf::Color::Magenta);
+            }
+
+            obstacle.setPosition({ 900, 340 - obstacle.getSize().y });
+
+            obstacles.push_back(obstacle);
+        }
+
+        // -------- MOVE OBSTACLES --------
+        for (auto& obstacle : obstacles)
+        {
+            obstacle.move({ -obstacleSpeed * deltaTime * gameSpeed, 0 });
+        }
+
+        // -------- COLLISION --------
+        for (auto& obstacle : obstacles)
+        {
+            if (player.getGlobalBounds().findIntersection(obstacle.getGlobalBounds()))
+            {
+                std::cout << "Game Over\n";
+
+                AK::SoundEngine::PostEvent(AKTEXT("Hit"), playerID);
+
+                window.close();
+            }
+        }
+
+        // -------- REMOVE OFFSCREEN OBSTACLES --------
+        obstacles.erase(
+            std::remove_if(obstacles.begin(), obstacles.end(),
+                [](sf::RectangleShape& o)
+                {
+                    return o.getPosition().x < -100;
+                }),
+            obstacles.end());
+
+        // -------- AUDIO --------
+        AK::SoundEngine::RenderAudio();
+
+        // -------- DRAW --------
+        window.clear(sf::Color::Black);
+
+        window.draw(floor);
+        window.draw(player);
+
+        for (auto& obstacle : obstacles)
+            window.draw(obstacle);
+
+        window.draw(speedText);
+        window.draw(scoreText);
+
+        window.display();
+    }
+
+    // ---------------- CLEANUP ----------------
+    wwise.terminateSoundEngine();
+
+    return 0;
 }
