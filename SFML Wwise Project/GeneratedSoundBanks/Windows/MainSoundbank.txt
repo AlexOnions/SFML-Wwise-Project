@@ -1,6 +1,8 @@
 Event	ID	Name			Wwise Object Path	Notes
 	691006007	Loop			\Default Work Unit\Loop	
+	3689126666	Play_Jump			\Default Work Unit\Play_Jump	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	675242037	Loop	C:\Users\n520118\Programming\Applications\SFML Wwise Project\SFML Wwise Project\.cache\48\{487311D0-8211-F559-7F61-0A8568E71EB5}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
+	359079569	Jump	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\85\{85D95867-1CE1-60EE-109E-F379F961F665}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Jump		144096
+	675242037	Loop	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\48\{487311D0-8211-F559-7F61-0A8568E71EB5}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
 

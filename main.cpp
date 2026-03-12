@@ -6,13 +6,12 @@
 #include <cstdlib>
 
 #include "WwiseWrapper.h"
+#include "Obstacle.h"
 
 int main()
 {
-    //Git Test
     WwiseWrapper wwise;
 
-    // ---------------- WWISE INIT ----------------
     if (!wwise.initSoundEngine(AKTEXT("SFML Wwise Project/GeneratedSoundBanks/Windows")))
     {
         std::cout << "Could not initialise Wwise. Exiting." << std::endl;
@@ -29,80 +28,75 @@ int main()
     const uint64_t playerID = 1;
     AK::SoundEngine::RegisterGameObj(playerID);
 
-    // ---------------- WINDOW ----------------
-    sf::RenderWindow window(sf::VideoMode({ 800, 400 }), "Geometry Dash Prototype");
+    sf::RenderWindow window(sf::VideoMode({ 800,400 }), "Geometry Dash Prototype");
     window.setFramerateLimit(60);
 
-    // ---------------- PLAYER ----------------
-    sf::RectangleShape player({ 40, 40 });
+    // PLAYER
+    sf::RectangleShape player({ 40,40 });
     player.setFillColor(sf::Color::Cyan);
-    player.setPosition({ 100, 300 });
+    player.setPosition({ 100,300 });
 
     float velocityY = 0;
     const float gravity = 2000.f;
     const float jumpForce = -700.f;
     bool onGround = true;
 
-    // ---------------- FLOOR ----------------
-    sf::RectangleShape floor({ 800, 40 });
-    floor.setPosition({ 0, 340 });
+    // FLOOR
+    sf::RectangleShape floor({ 800,40 });
+    floor.setPosition({ 0,340 });
     floor.setFillColor(sf::Color(100, 100, 100));
 
-    // ---------------- OBSTACLES ----------------
-    std::vector<sf::RectangleShape> obstacles;
+    // OBSTACLES
+    std::vector<Obstacle> obstacles;
 
     float obstacleTimer = -1.5f;
     float obstacleSpawnTime = 2.0f;
     float obstacleSpeed = 300.f;
 
-    // ---------------- GAME SPEED ----------------
+    // SPEED
     float gameSpeed = 1.0f;
     const float maxSpeed = 5.0f;
     const float speedIncreaseRate = 0.01f;
 
-    // ---------------- FONT ----------------
+    // FONT
     sf::Font font;
+    font.openFromFile("C:/Users/Alexo/source/repos/AlexOnions/SFML-Wwise-Project/SFML Wwise Project/Assets/arial.ttf");
 
-    if (!font.openFromFile("C:/Users/Alexo/source/repos/AlexOnions/SFML-Wwise-Project/SFML Wwise Project/Assets/arial.ttf"))
-    {
-        std::cout << "Failed to load font\n";
-    }
-
-    // ---------------- SPEED TEXT ----------------
+    // SPEED TEXT
     sf::Text speedText(font);
     speedText.setCharacterSize(20);
     speedText.setFillColor(sf::Color::White);
 
-    // ---------------- SCORE TEXT ----------------
+    // SCORE
     float score = 0.f;
     float scoreIncreaseAmount = 5;
 
     sf::Text scoreText(font);
     scoreText.setCharacterSize(20);
     scoreText.setFillColor(sf::Color::White);
-    scoreText.setPosition({ 10, 10 });
+    scoreText.setPosition({ 10,10 });
 
-    // ---------------- CLOCK ----------------
     sf::Clock clock;
 
-    // ---------------- GAME LOOP ----------------
+    AK::SoundEngine::PostEvent(AKTEXT("Loop"), playerID);
+
     while (window.isOpen())
     {
         float deltaTime = clock.restart().asSeconds();
 
-        // -------- SCORE UPDATE --------
-        score += deltaTime * scoreIncreaseAmount; 
+        // SCORE
+        score += deltaTime * scoreIncreaseAmount;
         scoreText.setString("Score: " + std::to_string((int)score));
 
-        // -------- SPEED UPDATE --------
+        // SPEED
         gameSpeed += deltaTime * speedIncreaseRate;
         if (gameSpeed > maxSpeed)
             gameSpeed = maxSpeed;
 
         speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
-        speedText.setPosition({ 650, 10 });
+        speedText.setPosition({ 650,10 });
 
-        // -------- EVENTS --------
+        // EVENTS
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -115,96 +109,68 @@ int main()
 
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Space && onGround)
                 {
+                    std::cout << "Jump event triggered\n";
+                    AK::SoundEngine::PostEvent(AKTEXT("Play_Jump"), playerID);
                     velocityY = jumpForce;
                     onGround = false;
 
-                    AK::SoundEngine::PostEvent(AKTEXT("Jump"), playerID);
                 }
             }
         }
 
-        // -------- PHYSICS --------
+        // PLAYER PHYSICS
         velocityY += gravity * deltaTime;
         player.move({ 0, velocityY * deltaTime });
 
         if (player.getPosition().y >= 300)
         {
-            player.setPosition({ 100, 300 });
+            player.setPosition({ 100,300 });
             velocityY = 0;
             onGround = true;
         }
 
-        // -------- SPAWN OBSTACLES --------
+        // SPAWN OBSTACLE
         obstacleTimer += deltaTime * gameSpeed;
 
         if (obstacleTimer > obstacleSpawnTime)
         {
             obstacleTimer = 0;
-
-            sf::RectangleShape obstacle;
-
-            int type = rand() % 3;
-
-            if (type == 0)
-            {
-                obstacle.setSize({ 20, 70 });
-                obstacle.setFillColor(sf::Color::Yellow);
-            }
-            else if (type == 1)
-            {
-                obstacle.setSize({ 50, 50 });
-                obstacle.setFillColor(sf::Color::Red);
-            }
-            else
-            {
-                obstacle.setSize({ 80, 30 });
-                obstacle.setFillColor(sf::Color::Magenta);
-            }
-
-            obstacle.setPosition({ 900, 340 - obstacle.getSize().y });
-
-            obstacles.push_back(obstacle);
+            obstacles.emplace_back(900);
         }
 
-        // -------- MOVE OBSTACLES --------
+        // UPDATE OBSTACLES
         for (auto& obstacle : obstacles)
-        {
-            obstacle.move({ -obstacleSpeed * deltaTime * gameSpeed, 0 });
-        }
+            obstacle.update(deltaTime, gameSpeed, obstacleSpeed);
 
-        // -------- COLLISION --------
+        // COLLISION
         for (auto& obstacle : obstacles)
         {
-            if (player.getGlobalBounds().findIntersection(obstacle.getGlobalBounds()))
+            if (player.getGlobalBounds().findIntersection(obstacle.getBounds()))
             {
                 std::cout << "Game Over\n";
-
                 AK::SoundEngine::PostEvent(AKTEXT("Hit"), playerID);
-
                 window.close();
             }
         }
 
-        // -------- REMOVE OFFSCREEN OBSTACLES --------
+        // REMOVE OFFSCREEN
         obstacles.erase(
             std::remove_if(obstacles.begin(), obstacles.end(),
-                [](sf::RectangleShape& o)
-                {
-                    return o.getPosition().x < -100;
-                }),
-            obstacles.end());
+                [](Obstacle& o) { return o.isOffScreen(); }),
+            obstacles.end()
+        );
 
-        // -------- AUDIO --------
+        // AUDIO
         AK::SoundEngine::RenderAudio();
 
-        // -------- DRAW --------
+        // DRAW
         window.clear(sf::Color::Black);
 
         window.draw(floor);
         window.draw(player);
 
         for (auto& obstacle : obstacles)
-            window.draw(obstacle);
+            obstacle.draw(window);
 
         window.draw(speedText);
         window.draw(scoreText);
@@ -212,7 +178,6 @@ int main()
         window.display();
     }
 
-    // ---------------- CLEANUP ----------------
     wwise.terminateSoundEngine();
 
     return 0;

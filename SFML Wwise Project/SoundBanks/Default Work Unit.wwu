@@ -6,6 +6,7 @@
 				<SoundBank Name="MainSoundbank" ID="{BCA03C79-C237-41A9-83FF-0657CAD6FB11}">
 					<ObjectInclusionList>
 						<ObjectRef Name="Loop" ID="{F89A06C7-AF9B-40C8-8490-7CE034CEED56}" WorkUnitID="{B8DABCA1-9F7E-47C7-AA3D-28A82C497886}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Jump" ID="{965DB56D-A1EF-4B0E-968D-A3DCFC9A81D8}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

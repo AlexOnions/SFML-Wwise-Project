@@ -33,6 +33,7 @@
       <Filter>SoundEngine\Win32</Filter>
     </ClCompile>
     <ClCompile Include="WwiseWrapper.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SoundEngine">
@@ -89,6 +90,7 @@
       <Filter>SoundEngine\Win32</Filter>
     </ClInclude>
     <ClInclude Include="WwiseWrapper.h" />
+    <ClInclude Include="Obstacle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SoundEngine\Common\AkFilePackageLowLevelIO.inl">

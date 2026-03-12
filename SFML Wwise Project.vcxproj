@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp" />
     <ClCompile Include="SoundEngine\Common\AkFileLocationBase.cpp" />
     <ClCompile Include="SoundEngine\Common\AkFilePackage.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="WwiseWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundEngine\Common\AkDefaultLowLevelIODispatcher.h" />
     <ClInclude Include="SoundEngine\Common\AkFileHelpersBase.h" />
     <ClInclude Include="SoundEngine\Common\AkFileLocationBase.h" />
