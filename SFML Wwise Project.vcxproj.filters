@@ -34,6 +34,8 @@
     </ClCompile>
     <ClCompile Include="WwiseWrapper.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="ParallaxBackground.cpp" />
+    <ClCompile Include="ParallaxLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SoundEngine">
@@ -91,6 +93,8 @@
     </ClInclude>
     <ClInclude Include="WwiseWrapper.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="ParallaxBackground.h" />
+    <ClInclude Include="ParallaxLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SoundEngine\Common\AkFilePackageLowLevelIO.inl">

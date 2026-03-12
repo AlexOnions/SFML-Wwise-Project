@@ -7,6 +7,7 @@
 
 #include "WwiseWrapper.h"
 #include "Obstacle.h"
+#include "ParallaxBackground.h"
 
 int main()
 {
@@ -45,6 +46,12 @@ int main()
     sf::RectangleShape floor({ 800,40 });
     floor.setPosition({ 0,340 });
     floor.setFillColor(sf::Color(100, 100, 100));
+
+    // PARALLAX BACKGROUND
+    ParallaxBackground background;
+    background.addLayer(20.f, 800.f, 320.f, sf::Color(15, 15, 15));  // slowest,  darkest  - back
+    background.addLayer(40.f, 800.f, 320.f, sf::Color(35, 35, 35));  // middle speed, mid grey - middle
+    background.addLayer(80.f, 800.f, 320.f, sf::Color(60, 60, 60));  // faster,   lightest - front
 
     // OBSTACLES
     std::vector<Obstacle> obstacles;
@@ -85,7 +92,7 @@ int main()
         float deltaTime = clock.restart().asSeconds();
 
         // SCORE
-        score += deltaTime * scoreIncreaseAmount;
+        score += deltaTime * (scoreIncreaseAmount * gameSpeed);
         scoreText.setString("Score: " + std::to_string((int)score));
 
         // SPEED
@@ -113,7 +120,6 @@ int main()
                     AK::SoundEngine::PostEvent(AKTEXT("Play_Jump"), playerID);
                     velocityY = jumpForce;
                     onGround = false;
-
                 }
             }
         }
@@ -142,6 +148,9 @@ int main()
         for (auto& obstacle : obstacles)
             obstacle.update(deltaTime, gameSpeed, obstacleSpeed);
 
+        // UPDATE BACKGROUND
+        background.update(deltaTime, gameSpeed);
+
         // COLLISION
         for (auto& obstacle : obstacles)
         {
@@ -165,6 +174,8 @@ int main()
 
         // DRAW
         window.clear(sf::Color::Black);
+
+        background.draw(window);
 
         window.draw(floor);
         window.draw(player);
