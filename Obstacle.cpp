@@ -1,19 +1,26 @@
 #include "Obstacle.h"
 #include <cstdlib>
 
-Obstacle::Obstacle(float startX)
+Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed)
 {
-    int type = rand() % 3;
-
-    if (type == 0)
-    {
-        shape.setSize({ 20, 70 });
-        shape.setFillColor(sf::Color::Yellow);
+    int type = 0;
+    if (gameSpeed >= 3) {
+         type = rand() % 3;
     }
-    else if (type == 1)
+    else if (gameSpeed >= 2) {
+        type = rand() % 2;
+
+    }
+    if (type == 0)
     {
         shape.setSize({ 50, 50 });
         shape.setFillColor(sf::Color::Red);
+       
+    }
+    else if (type == 1)
+    {
+        shape.setSize({ 20, 70 });
+        shape.setFillColor(sf::Color::Yellow);
     }
     else
     {
@@ -21,7 +28,11 @@ Obstacle::Obstacle(float startX)
         shape.setFillColor(sf::Color::Magenta);
     }
 
-    shape.setPosition({ startX, 340 - shape.getSize().y });
+    float y = (platformTopY >= 0.f)
+        ? platformTopY - shape.getSize().y   // sit on top of platform
+        : 340.f - shape.getSize().y;         // original ground level
+
+    shape.setPosition({ startX, y });
 }
 
 void Obstacle::update(float deltaTime, float speedMultiplier, float obstacleSpeed)

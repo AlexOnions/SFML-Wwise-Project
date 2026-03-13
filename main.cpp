@@ -7,7 +7,9 @@
 
 #include "WwiseWrapper.h"
 #include "Obstacle.h"
+#include "Platform.h"
 #include "ParallaxBackground.h"
+#include "SpawnManager.h"
 
 int main()
 {
@@ -47,21 +49,20 @@ int main()
     floor.setPosition({ 0,340 });
     floor.setFillColor(sf::Color(100, 100, 100));
 
-    // PARALLAX BACKGROUND
+    // PARALLAX
     ParallaxBackground background;
-    background.addLayer(20.f, 800.f, 320.f, sf::Color(15, 15, 15));  // slowest,  darkest  - back
-    background.addLayer(40.f, 800.f, 320.f, sf::Color(35, 35, 35));  // middle speed, mid grey - middle
-    background.addLayer(80.f, 800.f, 320.f, sf::Color(60, 60, 60));  // faster,   lightest - front
+    background.addLayer(20.f, 800.f, 320.f, sf::Color(15, 15, 15));
+    background.addLayer(40.f, 800.f, 320.f, sf::Color(35, 35, 35));
+    background.addLayer(80.f, 800.f, 320.f, sf::Color(60, 60, 60));
 
-    // OBSTACLES
+    // OBSTACLES & PLATFORMS
     std::vector<Obstacle> obstacles;
+    std::vector<Platform> platforms;
 
-    float obstacleTimer = -1.5f;
-    float obstacleSpawnTime = 2.0f;
-    float obstacleSpeed = 300.f;
+    SpawnManager spawnManager(300.f, 300.f);
 
     // SPEED
-    float gameSpeed = 1.0f;
+    float gameSpeed = 2.0f;
     const float maxSpeed = 5.0f;
     const float speedIncreaseRate = 0.01f;
 
@@ -116,7 +117,6 @@ int main()
 
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Space && onGround)
                 {
-                    std::cout << "Jump event triggered\n";
                     AK::SoundEngine::PostEvent(AKTEXT("Play_Jump"), playerID);
                     velocityY = jumpForce;
                     onGround = false;
@@ -135,23 +135,60 @@ int main()
             onGround = true;
         }
 
-        // SPAWN OBSTACLE
-        obstacleTimer += deltaTime * gameSpeed;
-
-        if (obstacleTimer > obstacleSpawnTime)
-        {
-            obstacleTimer = 0;
-            obstacles.emplace_back(900);
-        }
+        // SPAWN MANAGER
+        spawnManager.update(deltaTime, gameSpeed, obstacles, platforms);
 
         // UPDATE OBSTACLES
         for (auto& obstacle : obstacles)
-            obstacle.update(deltaTime, gameSpeed, obstacleSpeed);
+            obstacle.update(deltaTime, gameSpeed, 300.f);
+
+        // UPDATE PLATFORMS
+        for (auto& platform : platforms)
+            platform.update(deltaTime, gameSpeed, 300.f);
 
         // UPDATE BACKGROUND
         background.update(deltaTime, gameSpeed);
 
-        // COLLISION
+        // PLATFORM COLLISION
+        for (auto& platform : platforms)
+        {
+            auto playerBounds = player.getGlobalBounds();
+            auto platformBounds = platform.getBounds();
+
+            if (playerBounds.findIntersection(platformBounds))
+            {
+                float playerBottom = playerBounds.position.y + playerBounds.size.y;
+                float playerTop = playerBounds.position.y;
+                float platTop = platformBounds.position.y;
+                float platBottom = platformBounds.position.y + platformBounds.size.y;
+
+                float prevBottom = playerBottom - velocityY * deltaTime;
+                float prevTop = playerTop - velocityY * deltaTime;
+
+                if (velocityY >= 0 && prevBottom <= platTop + 2.0f)
+                {
+                    // TOP — land on platform
+                    player.setPosition({ playerBounds.position.x, platTop - playerBounds.size.y });
+                    velocityY = 0;
+                    onGround = true;
+                }
+                else if (velocityY < 0 && prevTop >= platBottom - 2.0f)
+                {
+                    // BOTTOM — bonk head, push back down
+                    player.setPosition({ playerBounds.position.x, platBottom });
+                    velocityY = 0;
+                }
+                else
+                {
+                    // SIDE — game over
+                    std::cout << "Game Over\n";
+                    AK::SoundEngine::PostEvent(AKTEXT("Hit"), playerID);
+                    window.close();
+                }
+            }
+        }
+
+        // OBSTACLE COLLISION
         for (auto& obstacle : obstacles)
         {
             if (player.getGlobalBounds().findIntersection(obstacle.getBounds()))
@@ -162,11 +199,18 @@ int main()
             }
         }
 
-        // REMOVE OFFSCREEN
+        // REMOVE OFFSCREEN OBSTACLES
         obstacles.erase(
             std::remove_if(obstacles.begin(), obstacles.end(),
                 [](Obstacle& o) { return o.isOffScreen(); }),
             obstacles.end()
+        );
+
+        // REMOVE OFFSCREEN PLATFORMS
+        platforms.erase(
+            std::remove_if(platforms.begin(), platforms.end(),
+                [](Platform& p) { return p.isOffScreen(); }),
+            platforms.end()
         );
 
         // AUDIO
@@ -176,13 +220,17 @@ int main()
         window.clear(sf::Color::Black);
 
         background.draw(window);
-
         window.draw(floor);
+
+        
+
         window.draw(player);
 
         for (auto& obstacle : obstacles)
             obstacle.draw(window);
 
+        for (auto& platform : platforms)
+            platform.draw(window);
         window.draw(speedText);
         window.draw(scoreText);
 

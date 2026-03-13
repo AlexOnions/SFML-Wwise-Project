@@ -135,6 +135,7 @@
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ParallaxBackground.cpp" />
     <ClCompile Include="ParallaxLayer.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp" />
     <ClCompile Include="SoundEngine\Common\AkFileLocationBase.cpp" />
     <ClCompile Include="SoundEngine\Common\AkFilePackage.cpp" />
@@ -145,12 +146,14 @@
     <ClCompile Include="SoundEngine\Win32\AkDefaultIOHookDeferred.cpp" />
     <ClCompile Include="SoundEngine\Win32\AkPlatformProfilerHooks.cpp" />
     <ClCompile Include="SoundEngine\Win32\stdafx.cpp" />
+    <ClCompile Include="SpawnManager.cpp" />
     <ClCompile Include="WwiseWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="ParallaxBackground.h" />
     <ClInclude Include="ParallaxLayer.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="SoundEngine\Common\AkDefaultLowLevelIODispatcher.h" />
     <ClInclude Include="SoundEngine\Common\AkFileHelpersBase.h" />
     <ClInclude Include="SoundEngine\Common\AkFileLocationBase.h" />
@@ -165,6 +168,7 @@
     <ClInclude Include="SoundEngine\Win32\AkDefaultIOHookDeferred.h" />
     <ClInclude Include="SoundEngine\Win32\AkFileHelpers.h" />
     <ClInclude Include="SoundEngine\Win32\stdafx.h" />
+    <ClInclude Include="SpawnManager.h" />
     <ClInclude Include="WwiseWrapper.h" />
   </ItemGroup>
   <ItemGroup>

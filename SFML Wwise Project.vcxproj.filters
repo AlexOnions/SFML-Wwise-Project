@@ -36,6 +36,8 @@
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ParallaxBackground.cpp" />
     <ClCompile Include="ParallaxLayer.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="SpawnManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SoundEngine">
@@ -95,6 +97,8 @@
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="ParallaxBackground.h" />
     <ClInclude Include="ParallaxLayer.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="SpawnManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SoundEngine\Common\AkFilePackageLowLevelIO.inl">

@@ -7,7 +7,7 @@ private:
     sf::RectangleShape shape;
 
 public:
-    Obstacle(float startX);
+    Obstacle(float startX, float platformTopY = -1.f, float gameSpeed = 1);
 
     void update(float deltaTime, float speedMultiplier, float obstacleSpeed);
 
