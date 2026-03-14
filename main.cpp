@@ -36,7 +36,7 @@ int main()
     const uint64_t playerID = 1;
     AK::SoundEngine::RegisterGameObj(playerID);
 
-    sf::RenderWindow window(sf::VideoMode({ 800,400 }), "Geometry Dash Prototype");
+    sf::RenderWindow window(sf::VideoMode({ 800,400 }), "Endless Runner Prototype");
     window.setFramerateLimit(60);
 
     GameState gameState = GameState::Playing;
@@ -69,7 +69,7 @@ int main()
     SpawnManager spawnManager(300.f, 300.f);
 
     // SPEED
-    float gameSpeed = 1.5f;
+    float gameSpeed = 2.0f;
     const float maxSpeed = 5.0f;
     const float speedIncreaseRate = 0.01f;
 
@@ -100,6 +100,11 @@ int main()
 
     sf::Clock clock;
 
+
+    AK::SoundEngine::SetDefaultListeners(&playerID, 1);
+    AK::SoundEngine::SetListeners(playerID, &playerID, 1);
+
+
     AK::SoundEngine::PostEvent(AKTEXT("PlayLayered"), playerID);
 
     while (window.isOpen())
@@ -129,7 +134,7 @@ int main()
                         obstacles.clear();
                         platforms.clear();
                         score = 0;
-                        gameSpeed = 1.5f;
+                        gameSpeed = 1.0f;
 
                         gameState = GameState::Playing;
                     }

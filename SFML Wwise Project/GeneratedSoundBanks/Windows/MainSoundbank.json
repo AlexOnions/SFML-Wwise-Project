@@ -10,11 +10,19 @@
     "Type": "User",
     "GUID": "{BCA03C79-C237-41A9-83FF-0657CAD6FB11}",
     "Language": "SFX",
-    "Hash": "{8B23414E-19A4-2C01-7DA6-9B91A0FFEB0F}",
+    "Hash": "{57F9D2D5-E0CD-F24A-E413-099791AB65FC}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainSoundbank",
     "ShortName": "MainSoundbank",
     "Path": "MainSoundbank.bnk",
     "Media": [
+     {
+      "Id": "121033550",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "459076__ludwigmueller__fx-lumu-cellphone-vibrating-buzzing-huawei-y6-hand-100ms.wav",
+      "CachePath": "8D/{8D1ABF83-0921-3275-E156-B70183ED1DF5}.wem"
+     },
      {
       "Id": "289515245",
       "Language": "SFX",
@@ -32,12 +40,12 @@
       "CachePath": "85/{85D95867-1CE1-60EE-109E-F379F961F665}.wem"
      },
      {
-      "Id": "685283243",
+      "Id": "392648902",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "click-clap-shot.wav",
-      "CachePath": "31/{315CF1D6-9021-C4A3-1B91-218F8BFC8E22}.wem"
+      "CachePath": "9B/{9BE0CE1E-501A-00D2-BAB2-F43FFBAB6213}.wem"
      },
      {
       "Id": "776372050",
@@ -105,13 +113,27 @@
       "DurationType": "Infinite",
       "MediaRefs": [
        {
+        "Id": "121033550"
+       },
+       {
         "Id": "289515245"
        },
        {
-        "Id": "685283243"
-       },
-       {
         "Id": "818694966"
+       }
+      ]
+     },
+     {
+      "Id": "1781875652",
+      "Name": "PlayObstacle",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayObstacle",
+      "GUID": "{6F1E91EF-AB37-4779-A647-0AD55CB833DC}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.90346223",
+      "DurationMax": "0.90346223",
+      "MediaRefs": [
+       {
+        "Id": "392648902"
        }
       ]
      }
@@ -126,6 +148,6 @@
     ]
    }
   ],
-  "FileHash": "{0916841C-8523-C386-E3F7-5F7CCCF5F80C}"
+  "FileHash": "{EE5FE261-25C9-5F20-BA80-52324BDB813A}"
  }
 }

@@ -27,17 +27,17 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
         if (!isTooClose(candidateBounds, obstacles, platforms))
             platforms.push_back(std::move(candidate));
     }
-    if (gameSpeed > 1.25f) {
+    if (gameSpeed > 1.15f) {
         // --- SPAWN OBSTACLE ---
         if (m_obstacleTimer > m_obstacleSpawnTime)
         {
             m_obstacleTimer = 0;
-
+            obstacleID++;
             // 30% chance to place obstacle on top of a nearby platform
             float platTop = findNearbyPlatformTop(platforms);
             bool onPlatform = (platTop > 0.f) && (rand() % 10 < 3);
 
-            Obstacle candidate(m_spawnX, onPlatform ? platTop : -1.f, gameSpeed);
+            Obstacle candidate(m_spawnX, onPlatform ? platTop : -1.f, gameSpeed, obstacleID);
             sf::FloatRect candidateBounds = candidate.getBounds();
 
             if (!isTooClose(candidateBounds, obstacles, platforms))

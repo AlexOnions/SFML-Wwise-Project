@@ -47,6 +47,20 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="PlayObstacle" ID="{6F1E91EF-AB37-4779-A647-0AD55CB833DC}">
+					<ChildrenList>
+						<Action Name="" ID="{E34E2DBA-BE45-4A2A-8F27-F877FE6539CC}" ShortID="606901729">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="6"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Obstacle" ID="{860DCED8-4FB3-4A2B-9B2D-B1D307CC6C71}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

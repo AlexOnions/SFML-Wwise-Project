@@ -1,7 +1,10 @@
 #include "Obstacle.h"
 #include <cstdlib>
+#include "WwiseWrapper.h"
+#include <iostream>
 
-Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed)
+
+Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed, int ID)
 {
     int type = 0;
     if (gameSpeed >= 2) {
@@ -33,11 +36,54 @@ Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed)
         : 340.f - shape.getSize().y;         // original ground level
 
     shape.setPosition({ startX, y });
+    
+
+
+    m_audioID = ID;
+
+
+
+    // Play the sound immediately when spawned
+    //AK::SoundEngine::PostEvent(AKTEXT("PlayObstacle"), m_audioID);
+
+
+
 }
+Obstacle::~Obstacle()
+{
+    AK::SoundEngine::UnregisterGameObj(m_audioID);
+}
+
+
 
 void Obstacle::update(float deltaTime, float speedMultiplier, float obstacleSpeed)
 {
     shape.move({ -obstacleSpeed * deltaTime * speedMultiplier, 0 });
+
+
+    float x = shape.getPosition().x;
+
+
+
+    // -- - AUDIO POSITION UPDATE-- -
+    AkSoundPosition pos;
+
+    pos.SetPosition(shape.getPosition().x, 0, 0);
+    pos.SetOrientation(1, 0, 0, 0, 1, 0);
+    AK::SoundEngine::SetPosition(m_audioID, pos);
+
+    // --- Play sound only when entering the screen ---
+    if (!hasPlayedSound && x < 800 && x + shape.getSize().x > 0)
+    {
+        AK::SoundEngine::RegisterGameObj(m_audioID);
+     
+        std::cout << "Playing obstacle sound at x = " << x << std::endl;
+        AK::SoundEngine::PostEvent(AKTEXT("PlayObstacle"), m_audioID);
+        hasPlayedSound = true;
+    }
+
+
+
 }
 
 void Obstacle::draw(sf::RenderWindow& window)

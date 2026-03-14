@@ -79,6 +79,66 @@
 						<ActiveSource Name="Hit" ID="{A4851567-D174-4B22-868B-443F12E8923F}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="Obstacle" ID="{860DCED8-4FB3-4A2B-9B2D-B1D307CC6C71}" ShortID="279614483">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>31</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Pitch" Type="int32">
+							<ValueList>
+								<Value>-330</Value>
+							</ValueList>
+						</Property>
+						<Property Name="SpeakerPanning" Type="int16" Value="1"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-16</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="459076__ludwigmueller__fx-lumu-cellphone-vibrating-buzzing-huawei-y6-hand-100ms" ID="{85D1C55F-5E3A-4022-9909-2F35D719A3F2}">
+							<Language>SFX</Language>
+							<AudioFile>459076__ludwigmueller__fx-lumu-cellphone-vibrating-buzzing-huawei-y6-hand-100ms.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="789818029"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="633327__hewnmarrow__1950s_soviet_krautrock_submarineping_2singlenote-001" ID="{1F9F6B9A-F8B1-4B2E-A0D4-83253316EE02}">
+							<Language>SFX</Language>
+							<AudioFile>633327__hewnmarrow__1950s_soviet_krautrock_submarineping_2singlenote-001.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="559023917"/>
+							</MediaIDList>
+						</AudioFileSource>
+						<AudioFileSource Name="click-clap-shot" ID="{DEDAFC11-EB94-4505-8F61-AD7E8D3A24B6}">
+							<Language>SFX</Language>
+							<AudioFile>click-clap-shot.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="392648902"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{18FA9F04-581D-4CDF-A19E-51A2809DAB56}"/>
+						<Position Name="" ID="{17D5002A-C5A0-450E-A5EB-49463E16548C}"/>
+					</PositioningInfo>
+					<ActiveSourceList>
+						<ActiveSource Name="click-clap-shot" ID="{DEDAFC11-EB94-4505-8F61-AD7E8D3A24B6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

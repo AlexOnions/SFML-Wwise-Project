@@ -19,6 +19,7 @@ public:
         std::vector<Platform>& platforms);
 
 private:
+    int obstacleID = 1000;
     float m_obstacleSpeed;
     float m_platformSpeed;
 
