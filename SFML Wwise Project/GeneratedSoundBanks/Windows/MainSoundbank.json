@@ -10,11 +10,19 @@
     "Type": "User",
     "GUID": "{BCA03C79-C237-41A9-83FF-0657CAD6FB11}",
     "Language": "SFX",
-    "Hash": "{12B63CD2-59A8-3198-7B3B-5149A39FF32B}",
+    "Hash": "{285A1B1C-2A80-D883-E96B-CE39BE8548BC}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainSoundbank",
     "ShortName": "MainSoundbank",
     "Path": "MainSoundbank.bnk",
     "Media": [
+     {
+      "Id": "289515245",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "simple-drum-beat_112bpm_A_minor.wav",
+      "CachePath": "9D/{9D84BAC2-6A82-2F09-41EB-BE0F11803C03}.wem"
+     },
      {
       "Id": "359079569",
       "Language": "SFX",
@@ -24,12 +32,20 @@
       "CachePath": "85/{85D95867-1CE1-60EE-109E-F379F961F665}.wem"
      },
      {
-      "Id": "675242037",
+      "Id": "685283243",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
-      "ShortName": "Loop.wav",
-      "CachePath": "48/{487311D0-8211-F559-7F61-0A8568E71EB5}.wem"
+      "ShortName": "click-clap-shot.wav",
+      "CachePath": "31/{315CF1D6-9021-C4A3-1B91-218F8BFC8E22}.wem"
+     },
+     {
+      "Id": "818694966",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "shamanic-grooves-uptempo-with-claps_150bpm.wav",
+      "CachePath": "72/{72FDCA37-2B28-0047-F377-86079A949917}.wem"
      }
     ],
     "Events": [
@@ -41,7 +57,7 @@
       "DurationType": "Infinite",
       "MediaRefs": [
        {
-        "Id": "675242037"
+        "Id": "289515245"
        }
       ]
      },
@@ -58,10 +74,36 @@
         "Id": "359079569"
        }
       ]
+     },
+     {
+      "Id": "43560053",
+      "Name": "PlayLayered",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayLayered",
+      "GUID": "{72C6A068-340A-4931-A434-CC6097A88FBE}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "289515245"
+       },
+       {
+        "Id": "685283243"
+       },
+       {
+        "Id": "818694966"
+       }
+      ]
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "1350179952",
+      "Name": "GameSpeed",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\GameSpeed",
+      "GUID": "{241D83F9-BDE6-46E8-BA76-DC7D796A3D24}"
      }
     ]
    }
   ],
-  "FileHash": "{6B1E9D04-2EC9-7085-44C1-9F7ECCBE36D9}"
+  "FileHash": "{E43C437D-1B76-97F5-536E-D73B2FEBAFB6}"
  }
 }

@@ -62,7 +62,7 @@ int main()
     SpawnManager spawnManager(300.f, 300.f);
 
     // SPEED
-    float gameSpeed = 2.0f;
+    float gameSpeed = 1.5f;
     const float maxSpeed = 5.0f;
     const float speedIncreaseRate = 0.01f;
 
@@ -86,7 +86,9 @@ int main()
 
     sf::Clock clock;
 
-    AK::SoundEngine::PostEvent(AKTEXT("Loop"), playerID);
+    //AK::SoundEngine::PostEvent(AKTEXT("Loop"), playerID);
+    AK::SoundEngine::PostEvent(AKTEXT("PlayLayered"), playerID);
+
 
     while (window.isOpen())
     {
@@ -103,6 +105,9 @@ int main()
 
         speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
         speedText.setPosition({ 650,10 });
+
+
+        AK::SoundEngine::SetRTPCValue("GameSpeed", gameSpeed, playerID);
 
         // EVENTS
         while (const std::optional event = window.pollEvent())

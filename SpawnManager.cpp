@@ -27,7 +27,7 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
         if (!isTooClose(candidateBounds, obstacles, platforms))
             platforms.push_back(std::move(candidate));
     }
-    if (gameSpeed > 1.5f) {
+    if (gameSpeed > 1.25f) {
         // --- SPAWN OBSTACLE ---
         if (m_obstacleTimer > m_obstacleSpawnTime)
         {

@@ -23,9 +23,16 @@
 								<MediaID ID="675242037"/>
 							</MediaIDList>
 						</AudioFileSource>
+						<AudioFileSource Name="simple-drum-beat_112bpm_A_minor" ID="{FD98E722-7F12-4F2E-BCFE-30C611E737A3}">
+							<Language>SFX</Language>
+							<AudioFile>simple-drum-beat_112bpm_A_minor.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="289515245"/>
+							</MediaIDList>
+						</AudioFileSource>
 					</ChildrenList>
 					<ActiveSourceList>
-						<ActiveSource Name="Loop" ID="{E3151698-A427-44E7-9EBB-E4BACE30A78A}" Platform="Linked"/>
+						<ActiveSource Name="simple-drum-beat_112bpm_A_minor" ID="{FD98E722-7F12-4F2E-BCFE-30C611E737A3}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 				<Sound Name="Jump" ID="{965DB56D-A1EF-4B0E-968D-A3DCFC9A81D8}" ShortID="703217699">

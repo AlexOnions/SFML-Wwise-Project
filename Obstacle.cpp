@@ -4,10 +4,10 @@
 Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed)
 {
     int type = 0;
-    if (gameSpeed >= 3) {
+    if (gameSpeed >= 2) {
          type = rand() % 3;
     }
-    else if (gameSpeed >= 2) {
+    else if (gameSpeed >= 1.5) {
         type = rand() % 2;
 
     }

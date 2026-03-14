@@ -25,6 +25,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="PlayLayered" ID="{72C6A068-340A-4931-A434-CC6097A88FBE}">
+					<ChildrenList>
+						<Action Name="" ID="{45FF0D85-AA0E-4E38-AD7E-9A7E63AC7BA5}" ShortID="168452593">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MainLoopPlaylist" ID="{83D7F2A3-7D38-4E7B-9AC4-26EDEE8ACC59}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
