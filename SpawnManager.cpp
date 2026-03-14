@@ -11,7 +11,8 @@ SpawnManager::SpawnManager(float obstacleSpeed, float platformSpeed)
 
 void SpawnManager::update(float deltaTime, float gameSpeed,
     std::vector<Obstacle>& obstacles,
-    std::vector<Platform>& platforms)
+    std::vector<Platform>& platforms, 
+    float floorY)
 {
     m_obstacleTimer += deltaTime * gameSpeed;
     m_platformTimer += deltaTime * gameSpeed;
@@ -21,7 +22,7 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
     {
         m_platformTimer = 0;
 
-        Platform candidate(m_spawnX);
+        Platform candidate(m_spawnX, floorY);
         sf::FloatRect candidateBounds = candidate.getBounds();
 
         if (!isTooClose(candidateBounds, obstacles, platforms))
@@ -37,7 +38,7 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
             float platTop = findNearbyPlatformTop(platforms);
             bool onPlatform = (platTop > 0.f) && (rand() % 10 < 3);
 
-            Obstacle candidate(m_spawnX, onPlatform ? platTop : -1.f, gameSpeed, obstacleID);
+            Obstacle candidate(m_spawnX, onPlatform ? platTop : -1.f, gameSpeed, obstacleID,floorY);
             sf::FloatRect candidateBounds = candidate.getBounds();
 
             if (!isTooClose(candidateBounds, obstacles, platforms))
@@ -66,17 +67,26 @@ bool SpawnManager::isTooClose(sf::FloatRect newBounds,
     }
     return false;
 }
-
 float SpawnManager::findNearbyPlatformTop(const std::vector<Platform>& platforms) const
 {
-    // Look for a platform whose right edge is near the spawn point
-    const float searchRange = 200.f;
+    const float horizontalSnapRange = 250.f;
+
     for (const auto& p : platforms)
     {
-        sf::FloatRect pb = p.getBounds();
-        float rightEdge = pb.position.x + pb.size.x;
-        if (rightEdge > m_spawnX - searchRange && rightEdge < m_spawnX + searchRange)
-            return pb.position.y; // top of that platform
+        sf::FloatRect platformBounds = p.getBounds();
+
+        float platLeft = platformBounds.position.x;
+        float platRight = platformBounds.position.x + platformBounds.size.x;
+        float platTop = platformBounds.position.y;
+
+        // Platform must be to the left of spawn point but close enough
+        bool horizontallyAligned =
+            platLeft < m_spawnX &&
+            platRight > m_spawnX - horizontalSnapRange;
+
+        if (horizontallyAligned)
+            return platTop; // top of platform
     }
+
     return -1.f;
 }

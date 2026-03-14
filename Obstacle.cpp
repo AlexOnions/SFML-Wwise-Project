@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed, int ID)
+Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed, int ID, float floorY)
 {
     int type = 0;
     if (gameSpeed >= 2) {
@@ -33,11 +33,10 @@ Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed, int ID)
 
     float y = (platformTopY >= 0.f)
         ? platformTopY - shape.getSize().y   // sit on top of platform
-        : 340.f - shape.getSize().y;         // original ground level
+        : floorY - shape.getSize().y;         // original ground level
 
-    shape.setPosition({ startX, y });
-    
-
+    shape.setPosition({ startX, y  });
+   
 
     m_audioID = ID;
 

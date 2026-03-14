@@ -1,7 +1,7 @@
 #include "Platform.h"
 #include <cstdlib>
 
-Platform::Platform(float startX)
+Platform::Platform(float startX, float floorY)
 {
     float width = 120 + rand() % 200;
     float height = 20;
@@ -9,7 +9,11 @@ Platform::Platform(float startX)
     shape.setSize({ width, height });
     shape.setFillColor(sf::Color(120, 120, 120));
 
-    float y = 220 + rand() % 80;
+    float minGap = 20.f;   // minimum safe space above floor
+    float maxGap = 120.f;  
+
+    float y = floorY - (minGap + rand() % (int)(maxGap - minGap));
+
 
     shape.setPosition({ startX, y });
 }

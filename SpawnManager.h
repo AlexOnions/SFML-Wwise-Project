@@ -16,7 +16,8 @@ public:
 
     void update(float deltaTime, float gameSpeed,
         std::vector<Obstacle>& obstacles,
-        std::vector<Platform>& platforms);
+        std::vector<Platform>& platforms, 
+        float floorY);
 
 private:
     int obstacleID = 1000;

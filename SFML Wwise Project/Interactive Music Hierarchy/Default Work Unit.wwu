@@ -166,7 +166,7 @@
 					<ChildrenList>
 						<MusicSegment Name="LoopSegment" ID="{81A01683-B8A8-4319-8FB0-49B4A2966115}" ShortID="713008719">
 							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="10002.0769116569"/>
+								<Property Name="EndPosition" Type="Real64" Value="10125.6237656771"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
 										<Value>200</Value>
@@ -238,10 +238,11 @@
 																				<XPos>1.43046</XPos>
 																				<YPos>-200</YPos>
 																				<Flags>0</Flags>
+																				<SegmentShape>Exp1</SegmentShape>
 																			</Point>
 																			<Point>
-																				<XPos>1.74834</XPos>
-																				<YPos>-0.04396</YPos>
+																				<XPos>1.86092</XPos>
+																				<YPos>-0.15174</YPos>
 																				<Flags>0</Flags>
 																			</Point>
 																			<Point>
@@ -268,7 +269,7 @@
 																	<Local>
 																		<MusicClip Name="shamanic-grooves-uptempo-with-claps_150bpm" ID="{2B50116C-CF14-4A71-BEE4-87BF19AB7212}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="9962.74662860395"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="10004.7894650589"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
@@ -286,7 +287,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>9.96275</XPos>
+																								<XPos>10.00479</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -305,7 +306,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>9.96275</XPos>
+																								<XPos>10.00479</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -324,7 +325,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>9.96275</XPos>
+																								<XPos>10.00479</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -404,9 +405,10 @@
 																				<XPos>1.17881</XPos>
 																				<YPos>-200</YPos>
 																				<Flags>0</Flags>
+																				<SegmentShape>Exp1</SegmentShape>
 																			</Point>
 																			<Point>
-																				<XPos>1.42384</XPos>
+																				<XPos>1.53642</XPos>
 																				<YPos>0.04653</YPos>
 																				<Flags>0</Flags>
 																			</Point>
@@ -434,7 +436,7 @@
 																	<Local>
 																		<MusicClip Name="simple-drum-beat_112bpm_A_minor" ID="{DA5C6FED-C1B7-4A2B-866B-1D183BAC21D5}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="9948.36602265387"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="10004.7894650589"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
@@ -452,7 +454,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>9.94837</XPos>
+																								<XPos>10.00479</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -471,7 +473,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>9.94837</XPos>
+																								<XPos>10.00479</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -490,7 +492,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>9.94837</XPos>
+																								<XPos>10.00479</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -677,7 +679,7 @@
 											<MusicCue Name="Exit Cue" ID="{82AF9BF2-13FD-4B48-9849-ACE4FA05063B}">
 												<PropertyList>
 													<Property Name="CueType" Type="int16" Value="1"/>
-													<Property Name="TimeMs" Type="Real64" Value="6400"/>
+													<Property Name="TimeMs" Type="Real64" Value="9958.25293729766"/>
 												</PropertyList>
 											</MusicCue>
 										</Local>
