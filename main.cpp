@@ -11,6 +11,11 @@
 #include "ParallaxBackground.h"
 #include "SpawnManager.h"
 
+enum class GameState {
+    Playing,
+    GameOver
+};
+
 int main()
 {
     WwiseWrapper wwise;
@@ -33,6 +38,8 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode({ 800,400 }), "Geometry Dash Prototype");
     window.setFramerateLimit(60);
+
+    GameState gameState = GameState::Playing;
 
     // PLAYER
     sf::RectangleShape player({ 40,40 });
@@ -84,30 +91,20 @@ int main()
     scoreText.setFillColor(sf::Color::White);
     scoreText.setPosition({ 10,10 });
 
+    // GAME OVER TEXT
+    sf::Text gameOverText(font);
+    gameOverText.setCharacterSize(40);
+    gameOverText.setFillColor(sf::Color::White);
+    gameOverText.setString("GAME OVER\nPress R to Restart\nPress ESC to Quit");
+    gameOverText.setPosition(sf::Vector2f(200, 120));
+
     sf::Clock clock;
 
-    //AK::SoundEngine::PostEvent(AKTEXT("Loop"), playerID);
     AK::SoundEngine::PostEvent(AKTEXT("PlayLayered"), playerID);
-
 
     while (window.isOpen())
     {
         float deltaTime = clock.restart().asSeconds();
-
-        // SCORE
-        score += deltaTime * (scoreIncreaseAmount * gameSpeed);
-        scoreText.setString("Score: " + std::to_string((int)score));
-
-        // SPEED
-        gameSpeed += deltaTime * speedIncreaseRate;
-        if (gameSpeed > maxSpeed)
-            gameSpeed = maxSpeed;
-
-        speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
-        speedText.setPosition({ 650,10 });
-
-
-        AK::SoundEngine::SetRTPCValue("GameSpeed", gameSpeed, playerID);
 
         // EVENTS
         while (const std::optional event = window.pollEvent())
@@ -117,106 +114,142 @@ int main()
 
             else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
-                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
-                    window.close();
-
-                if (keyPressed->scancode == sf::Keyboard::Scancode::Space && onGround)
+                if (gameState == GameState::GameOver)
                 {
-                    AK::SoundEngine::PostEvent(AKTEXT("Play_Jump"), playerID);
-                    velocityY = jumpForce;
-                    onGround = false;
+                    if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                        window.close();
+
+                    if (keyPressed->scancode == sf::Keyboard::Scancode::R)
+                    {
+                        // RESET GAME
+                        player.setPosition({ 100, 300 });
+                        velocityY = 0;
+                        onGround = true;
+
+                        obstacles.clear();
+                        platforms.clear();
+                        score = 0;
+                        gameSpeed = 1.5f;
+
+                        gameState = GameState::Playing;
+                    }
+                }
+                else if (gameState == GameState::Playing)
+                {
+                    if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                        window.close();
+
+                    if (keyPressed->scancode == sf::Keyboard::Scancode::Space && onGround)
+                    {
+                        AK::SoundEngine::PostEvent(AKTEXT("Play_Jump"), playerID);
+                        velocityY = jumpForce;
+                        onGround = false;
+                    }
                 }
             }
         }
 
-        // PLAYER PHYSICS
-        velocityY += gravity * deltaTime;
-        player.move({ 0, velocityY * deltaTime });
-
-        if (player.getPosition().y >= 300)
+        // GAMEPLAY ONLY UPDATES WHEN PLAYING
+        if (gameState == GameState::Playing)
         {
-            player.setPosition({ 100,300 });
-            velocityY = 0;
-            onGround = true;
-        }
+            // SCORE
+            score += deltaTime * (scoreIncreaseAmount * gameSpeed);
+            scoreText.setString("Score: " + std::to_string((int)score));
 
-        // SPAWN MANAGER
-        spawnManager.update(deltaTime, gameSpeed, obstacles, platforms);
+            // SPEED
+            gameSpeed += deltaTime * speedIncreaseRate;
+            if (gameSpeed > maxSpeed)
+                gameSpeed = maxSpeed;
 
-        // UPDATE OBSTACLES
-        for (auto& obstacle : obstacles)
-            obstacle.update(deltaTime, gameSpeed, 300.f);
+            speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
+            speedText.setPosition({ 650,10 });
 
-        // UPDATE PLATFORMS
-        for (auto& platform : platforms)
-            platform.update(deltaTime, gameSpeed, 300.f);
+            AK::SoundEngine::SetRTPCValue("GameSpeed", gameSpeed, playerID);
 
-        // UPDATE BACKGROUND
-        background.update(deltaTime, gameSpeed);
+            // PLAYER PHYSICS
+            velocityY += gravity * deltaTime;
+            player.move({ 0, velocityY * deltaTime });
 
-        // PLATFORM COLLISION
-        for (auto& platform : platforms)
-        {
-            auto playerBounds = player.getGlobalBounds();
-            auto platformBounds = platform.getBounds();
-
-            if (playerBounds.findIntersection(platformBounds))
+            if (player.getPosition().y >= 300)
             {
-                float playerBottom = playerBounds.position.y + playerBounds.size.y;
-                float playerTop = playerBounds.position.y;
-                float platTop = platformBounds.position.y;
-                float platBottom = platformBounds.position.y + platformBounds.size.y;
-
-                float prevBottom = playerBottom - velocityY * deltaTime;
-                float prevTop = playerTop - velocityY * deltaTime;
-
-                if (velocityY >= 0 && prevBottom <= platTop + 2.0f)
-                {
-                    // TOP — land on platform
-                    player.setPosition({ playerBounds.position.x, platTop - playerBounds.size.y });
-                    velocityY = 0;
-                    onGround = true;
-                }
-                else if (velocityY < 0 && prevTop >= platBottom - 2.0f)
-                {
-                    // BOTTOM — bonk head, push back down
-                    player.setPosition({ playerBounds.position.x, platBottom });
-                    velocityY = 0;
-                }
-                else
-                {
-                    // SIDE — game over
-                    std::cout << "Game Over\n";
-                    AK::SoundEngine::PostEvent(AKTEXT("Hit"), playerID);
-                    window.close();
-                }
+                player.setPosition({ 100,300 });
+                velocityY = 0;
+                onGround = true;
             }
-        }
 
-        // OBSTACLE COLLISION
-        for (auto& obstacle : obstacles)
-        {
-            if (player.getGlobalBounds().findIntersection(obstacle.getBounds()))
+            // SPAWN MANAGER
+            spawnManager.update(deltaTime, gameSpeed, obstacles, platforms);
+
+            // UPDATE OBSTACLES
+            for (auto& obstacle : obstacles)
+                obstacle.update(deltaTime, gameSpeed, 300.f);
+
+            // UPDATE PLATFORMS
+            for (auto& platform : platforms)
+                platform.update(deltaTime, gameSpeed, 300.f);
+
+            // UPDATE BACKGROUND
+            background.update(deltaTime, gameSpeed);
+
+            // PLATFORM COLLISION
+            for (auto& platform : platforms)
             {
-                std::cout << "Game Over\n";
-                AK::SoundEngine::PostEvent(AKTEXT("Hit"), playerID);
-                window.close();
+                auto playerBounds = player.getGlobalBounds();
+                auto platformBounds = platform.getBounds();
+
+                if (playerBounds.findIntersection(platformBounds))
+                {
+                    float playerBottom = playerBounds.position.y + playerBounds.size.y;
+                    float playerTop = playerBounds.position.y;
+                    float platTop = platformBounds.position.y;
+                    float platBottom = platformBounds.position.y + platformBounds.size.y;
+
+                    float prevBottom = playerBottom - velocityY * deltaTime;
+                    float prevTop = playerTop - velocityY * deltaTime;
+
+                    if (velocityY >= 0 && prevBottom <= platTop + 2.0f)
+                    {
+                        player.setPosition({ playerBounds.position.x, platTop - playerBounds.size.y });
+                        velocityY = 0;
+                        onGround = true;
+                    }
+                    else if (velocityY < 0 && prevTop >= platBottom - 2.0f)
+                    {
+                        player.setPosition({ playerBounds.position.x, platBottom });
+                        velocityY = 0;
+                    }
+                    else
+                    {
+                        AK::SoundEngine::PostEvent(AKTEXT("Play_Hit"), playerID);
+                        gameState = GameState::GameOver;
+                    }
+                }
             }
+
+            // OBSTACLE COLLISION
+            for (auto& obstacle : obstacles)
+            {
+                if (player.getGlobalBounds().findIntersection(obstacle.getBounds()))
+                {
+                    AK::SoundEngine::PostEvent(AKTEXT("Play_Hit"), playerID);
+                    gameState = GameState::GameOver;
+                }
+            }
+
+            // REMOVE OFFSCREEN OBSTACLES
+            obstacles.erase(
+                std::remove_if(obstacles.begin(), obstacles.end(),
+                    [](Obstacle& o) { return o.isOffScreen(); }),
+                obstacles.end()
+            );
+
+            // REMOVE OFFSCREEN PLATFORMS
+            platforms.erase(
+                std::remove_if(platforms.begin(), platforms.end(),
+                    [](Platform& p) { return p.isOffScreen(); }),
+                platforms.end()
+            );
         }
-
-        // REMOVE OFFSCREEN OBSTACLES
-        obstacles.erase(
-            std::remove_if(obstacles.begin(), obstacles.end(),
-                [](Obstacle& o) { return o.isOffScreen(); }),
-            obstacles.end()
-        );
-
-        // REMOVE OFFSCREEN PLATFORMS
-        platforms.erase(
-            std::remove_if(platforms.begin(), platforms.end(),
-                [](Platform& p) { return p.isOffScreen(); }),
-            platforms.end()
-        );
 
         // AUDIO
         AK::SoundEngine::RenderAudio();
@@ -226,9 +259,6 @@ int main()
 
         background.draw(window);
         window.draw(floor);
-
-        
-
         window.draw(player);
 
         for (auto& obstacle : obstacles)
@@ -236,8 +266,12 @@ int main()
 
         for (auto& platform : platforms)
             platform.draw(window);
+
         window.draw(speedText);
         window.draw(scoreText);
+
+        if (gameState == GameState::GameOver)
+            window.draw(gameOverText);
 
         window.display();
     }

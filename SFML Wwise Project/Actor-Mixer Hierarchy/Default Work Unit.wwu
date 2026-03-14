@@ -57,6 +57,28 @@
 						<ActiveSource Name="Jump" ID="{8211B092-6CCA-476E-B6C1-3F3B11DD2AA4}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="Hit" ID="{6A2BC181-23B6-4987-94A4-3029BDB327B8}" ShortID="286854722">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Hit" ID="{A4851567-D174-4B22-868B-443F12E8923F}">
+							<Language>SFX</Language>
+							<AudioFile>Hit.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="776372050"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Hit" ID="{A4851567-D174-4B22-868B-443F12E8923F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

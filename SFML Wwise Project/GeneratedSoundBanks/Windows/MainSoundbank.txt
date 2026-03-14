@@ -1,6 +1,7 @@
 Event	ID	Name			Wwise Object Path	Notes
 	43560053	PlayLayered			\Default Work Unit\PlayLayered	
 	691006007	Loop			\Default Work Unit\Loop	
+	2960666077	Play_Hit			\Default Work Unit\Play_Hit	
 	3689126666	Play_Jump			\Default Work Unit\Play_Jump	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
@@ -10,5 +11,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	289515245	simple-drum-beat_112bpm_A_minor	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\9D\{9D84BAC2-6A82-2F09-41EB-BE0F11803C03}.wem		\Interactive Music Hierarchy\Default Work Unit\MainLoopPlaylist\LoopSegment\simple-drum-beat_112bpm_A_minor		1511032
 	359079569	Jump	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\85\{85D95867-1CE1-60EE-109E-F379F961F665}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Jump		144096
 	685283243	click-clap-shot	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\31\{315CF1D6-9021-C4A3-1B91-218F8BFC8E22}.wem		\Interactive Music Hierarchy\Default Work Unit\MainLoopPlaylist\LoopSegment\click-clap-shot		143456
+	776372050	Hit	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\91\{917C2D41-AAF0-1773-A6B7-59105D58EA9A}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Hit		96352
 	818694966	shamanic-grooves-uptempo-with-claps_150bpm	C:\Users\Alexo\source\repos\AlexOnions\SFML-Wwise-Project\SFML Wwise Project\.cache\72\{72FDCA37-2B28-0047-F377-86079A949917}.wem		\Interactive Music Hierarchy\Default Work Unit\MainLoopPlaylist\LoopSegment\shamanic-grooves-uptempo-with-claps_150bpm		614496
 

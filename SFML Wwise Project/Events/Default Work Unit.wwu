@@ -36,6 +36,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Hit" ID="{5A145F83-2843-4DE8-9BA3-1EB6602F998E}">
+					<ChildrenList>
+						<Action Name="" ID="{935CA85D-9716-4E88-A13A-758B751C48EA}" ShortID="233411117">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Hit" ID="{6A2BC181-23B6-4987-94A4-3029BDB327B8}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

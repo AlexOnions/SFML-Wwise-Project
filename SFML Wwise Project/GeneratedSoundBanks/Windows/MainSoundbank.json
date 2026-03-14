@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{BCA03C79-C237-41A9-83FF-0657CAD6FB11}",
     "Language": "SFX",
-    "Hash": "{285A1B1C-2A80-D883-E96B-CE39BE8548BC}",
+    "Hash": "{8B23414E-19A4-2C01-7DA6-9B91A0FFEB0F}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainSoundbank",
     "ShortName": "MainSoundbank",
     "Path": "MainSoundbank.bnk",
@@ -40,6 +40,14 @@
       "CachePath": "31/{315CF1D6-9021-C4A3-1B91-218F8BFC8E22}.wem"
      },
      {
+      "Id": "776372050",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Hit.wav",
+      "CachePath": "91/{917C2D41-AAF0-1773-A6B7-59105D58EA9A}.wem"
+     },
+     {
       "Id": "818694966",
       "Language": "SFX",
       "Streaming": "false",
@@ -58,6 +66,20 @@
       "MediaRefs": [
        {
         "Id": "289515245"
+       }
+      ]
+     },
+     {
+      "Id": "2960666077",
+      "Name": "Play_Hit",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Hit",
+      "GUID": "{5A145F83-2843-4DE8-9BA3-1EB6602F998E}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.54566896",
+      "DurationMax": "0.54566896",
+      "MediaRefs": [
+       {
+        "Id": "776372050"
        }
       ]
      },
@@ -104,6 +126,6 @@
     ]
    }
   ],
-  "FileHash": "{E43C437D-1B76-97F5-536E-D73B2FEBAFB6}"
+  "FileHash": "{0916841C-8523-C386-E3F7-5F7CCCF5F80C}"
  }
 }
