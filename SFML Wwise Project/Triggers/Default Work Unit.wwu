@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}" SchemaVersion="123">
 	<Triggers>
-		<WorkUnit Name="Default Work Unit" ID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}" PersistMode="Standalone">
+			<ChildrenList>
+				<Trigger Name="Obstacle_Spawned_Stinger" ID="{77D3A547-EFCC-4939-8E28-1A1CCCC63EED}"/>
+				<Trigger Name="Game_Over_Stinger" ID="{C82C57E4-20BE-43E1-8B5E-5F4D53F9CBD0}"/>
+				<Trigger Name="Rumble_Stinger" ID="{A398E2D2-FC7F-4515-BC40-148B616CA790}"/>
+			</ChildrenList>
+		</WorkUnit>
 	</Triggers>
 </WwiseDocument>

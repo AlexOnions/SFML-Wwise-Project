@@ -30,7 +30,7 @@
 						<Action Name="" ID="{45FF0D85-AA0E-4E38-AD7E-9A7E63AC7BA5}" ShortID="168452593">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="MainLoopPlaylist" ID="{83D7F2A3-7D38-4E7B-9AC4-26EDEE8ACC59}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+									<ObjectRef Name="MainLoopPlaylistContainer" ID="{83D7F2A3-7D38-4E7B-9AC4-26EDEE8ACC59}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -56,6 +56,31 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Obstacle" ID="{860DCED8-4FB3-4A2B-9B2D-B1D307CC6C71}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_EnemyBuzz" ID="{3CEA201E-76C2-4A39-8DF0-2C3FDA699C86}">
+					<ChildrenList>
+						<Action Name="" ID="{62A1246A-497E-47E4-AA5C-B8EE06BE9BD1}" ShortID="1044676365">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="EnemyBuzz" ID="{3F2FAF5E-697D-4A42-8A56-B2177C4048C6}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_EnemyBuzz" ID="{97624BD6-1DF6-4AE1-9476-78663F53AB12}">
+					<ChildrenList>
+						<Action Name="" ID="{89C5086B-FA21-4266-BEBA-0E09E8003D34}" ShortID="726438505">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="EnemyBuzz" ID="{3F2FAF5E-697D-4A42-8A56-B2177C4048C6}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

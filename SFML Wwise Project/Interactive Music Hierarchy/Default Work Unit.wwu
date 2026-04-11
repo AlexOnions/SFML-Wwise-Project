@@ -28,35 +28,6 @@
 						</Reference>
 					</ReferenceList>
 				</MusicSwitchContainer>
-				<MusicSegment Name="click-clap-shot" ID="{AD6B8A0D-1716-442F-8002-C7C460737515}" ShortID="545094664">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
-						</Reference>
-					</ReferenceList>
-					<ObjectLists>
-						<ObjectList Name="Cues">
-							<Reference>
-								<Local>
-									<MusicCue Name="Entry Cue" ID="{31D196E7-4976-4D30-83EB-2C50B5354BCD}"/>
-								</Local>
-							</Reference>
-							<Reference>
-								<Local>
-									<MusicCue Name="Exit Cue" ID="{737DEDFF-F628-4543-BC6F-5A49B57FB637}">
-										<PropertyList>
-											<Property Name="CueType" Type="int16" Value="1"/>
-											<Property Name="TimeMs" Type="Real64" Value="746.666666666667"/>
-										</PropertyList>
-									</MusicCue>
-								</Local>
-							</Reference>
-						</ObjectList>
-					</ObjectLists>
-				</MusicSegment>
 				<MusicSegment Name="shamanic-grooves-uptempo-with-claps_150bpm" ID="{172F3965-5914-4D7B-B041-31DA83EDD90E}" ShortID="593758613">
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -118,7 +89,7 @@
 						</ObjectList>
 					</ObjectLists>
 				</MusicSegment>
-				<MusicPlaylistContainer Name="MainLoopPlaylist" ID="{83D7F2A3-7D38-4E7B-9AC4-26EDEE8ACC59}" ShortID="73300393">
+				<MusicPlaylistContainer Name="MainLoopPlaylistContainer" ID="{83D7F2A3-7D38-4E7B-9AC4-26EDEE8ACC59}" ShortID="73300393">
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
@@ -166,7 +137,7 @@
 					<ChildrenList>
 						<MusicSegment Name="LoopSegment" ID="{81A01683-B8A8-4319-8FB0-49B4A2966115}" ShortID="713008719">
 							<PropertyList>
-								<Property Name="EndPosition" Type="Real64" Value="10125.6237656771"/>
+								<Property Name="EndPosition" Type="Real64" Value="3237.8314062387"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
 										<Value>200</Value>
@@ -269,7 +240,7 @@
 																	<Local>
 																		<MusicClip Name="shamanic-grooves-uptempo-with-claps_150bpm" ID="{2B50116C-CF14-4A71-BEE4-87BF19AB7212}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="10004.7894650589"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="3223.94644013961"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
@@ -287,7 +258,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00479</XPos>
+																								<XPos>3.22395</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -306,7 +277,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00479</XPos>
+																								<XPos>3.22395</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -325,7 +296,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00479</XPos>
+																								<XPos>3.22395</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -436,7 +407,7 @@
 																	<Local>
 																		<MusicClip Name="simple-drum-beat_112bpm_A_minor" ID="{DA5C6FED-C1B7-4A2B-866B-1D183BAC21D5}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="10004.7894650589"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="3237.8314062387"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
@@ -454,7 +425,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00479</XPos>
+																								<XPos>3.23783</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -473,7 +444,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00479</XPos>
+																								<XPos>3.23783</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -492,7 +463,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00479</XPos>
+																								<XPos>3.23783</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -591,7 +562,7 @@
 																	<Local>
 																		<MusicClip Name="459076__ludwigmueller__fx-lumu-cellphone-vibrating-buzzing-huawei-y6-hand-100ms" ID="{DF3DCEAE-73B4-4137-B370-B36DB2EC6AF7}">
 																			<PropertyList>
-																				<Property Name="EndTrimOffset" Type="Real64" Value="10002.0769116569"/>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="3219.63405950697"/>
 																				<Property Name="FadeInMode" Type="int16" Value="0"/>
 																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
 																			</PropertyList>
@@ -609,7 +580,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00208</XPos>
+																								<XPos>3.21963</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -628,7 +599,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00208</XPos>
+																								<XPos>3.21963</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -647,7 +618,7 @@
 																								<Flags>5</Flags>
 																							</Point>
 																							<Point>
-																								<XPos>10.00208</XPos>
+																								<XPos>3.21963</XPos>
 																								<YPos>0</YPos>
 																								<Flags>37</Flags>
 																							</Point>
@@ -679,7 +650,77 @@
 											<MusicCue Name="Exit Cue" ID="{82AF9BF2-13FD-4B48-9849-ACE4FA05063B}">
 												<PropertyList>
 													<Property Name="CueType" Type="int16" Value="1"/>
-													<Property Name="TimeMs" Type="Real64" Value="9958.25293729766"/>
+													<Property Name="TimeMs" Type="Real64" Value="3206.12851484274"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Obstacle_Spawn" ID="{70162FE6-0EB0-489D-9951-9DA38FBDC944}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="376.116522068058"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="GameOver_Cue" ID="{70FE2F58-36AA-42BE-A5F3-4FDED38B9F25}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="2770.54054613075"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="GameOver_Cue" ID="{0DDCB39F-BA82-4F44-B1B0-E709B10E4DF7}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="1188.05970149254"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Obstacle_Spawn" ID="{A35720E7-C057-4E5E-82C9-0FD8D29B586F}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="1462.68656716417"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Obstacle_Spawn" ID="{59AC6670-4F10-45F8-86E4-AEB3FA7E5E68}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="2537.31343283582"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Rumble_Cue" ID="{C418A0EB-772C-47FD-9EAE-8A9ACC76B7AE}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="819.538670284938"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Rumble_Cue" ID="{1C858F48-6260-43D6-B2A4-C8D11B45981C}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="2"/>
+													<Property Name="TimeMs" Type="Real64" Value="2111.2618724559"/>
 												</PropertyList>
 											</MusicCue>
 										</Local>
@@ -719,6 +760,310 @@
 													</Reference>
 												</ReferenceList>
 											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+								<ObjectList Name="Stingers">
+									<Reference>
+										<Local>
+											<MusicStinger Name="" ID="{E763F0BB-F0A7-44C2-8B7C-54035076C622}">
+												<PropertyList>
+													<Property Name="CustomCueMatchName" Type="string" Value="Obstacle_Spawn"/>
+													<Property Name="PlaySegmentAt" Type="int16" Value="4"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="Segment">
+														<ObjectRef Name="Spawn_Obstacle" ID="{3640E835-4A6A-4966-B85A-D8E4ADAC795A}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+													</Reference>
+													<Reference Name="Trigger">
+														<ObjectRef Name="Obstacle_Spawned_Stinger" ID="{77D3A547-EFCC-4939-8E28-1A1CCCC63EED}" WorkUnitID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}"/>
+													</Reference>
+												</ReferenceList>
+											</MusicStinger>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicStinger Name="" ID="{66E98BAB-6289-43FF-8C8D-843247830B8A}">
+												<PropertyList>
+													<Property Name="CustomCueMatchName" Type="string" Value="GameOver_Cue"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="Segment">
+														<ObjectRef Name="Game_Over" ID="{8B96506D-1B8E-44AA-9226-FC4F315C90EC}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+													</Reference>
+													<Reference Name="Trigger">
+														<ObjectRef Name="Game_Over_Stinger" ID="{C82C57E4-20BE-43E1-8B5E-5F4D53F9CBD0}" WorkUnitID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}"/>
+													</Reference>
+												</ReferenceList>
+											</MusicStinger>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicStinger Name="" ID="{AA385AE6-933F-4A8A-A128-D58C1A6E7182}">
+												<PropertyList>
+													<Property Name="CustomCueMatchName" Type="string" Value="Rumble_Cue"/>
+													<Property Name="PlaySegmentAt" Type="int16" Value="4"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="Segment">
+														<ObjectRef Name="Rumble" ID="{69C9C2E5-62C9-4CCA-8DAD-FC2AE802D1AD}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+													</Reference>
+													<Reference Name="Trigger">
+														<ObjectRef Name="Rumble_Stinger" ID="{A398E2D2-FC7F-4515-BC40-148B616CA790}" WorkUnitID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}"/>
+													</Reference>
+												</ReferenceList>
+											</MusicStinger>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Spawn_Obstacle" ID="{3640E835-4A6A-4966-B85A-D8E4ADAC795A}" ShortID="879666995">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="click-clap-shot" ID="{2FE0CB93-5A1A-4FF0-A37E-A47377036F46}" ShortID="323964572">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{03FB9B84-ADBE-49EA-BB2C-7F44AC69F85E}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="click-clap-shot" ID="{D958E858-B218-4428-B083-282EBDDD0E77}">
+											<Language>SFX</Language>
+											<AudioFile>click-clap-shot.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="665522549"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{45AAD514-A709-4F9F-9FB8-6A7EADFD2363}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="click-clap-shot" ID="{7ECF77B3-D090-48BD-9831-034B0F43128D}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="746.666666666667"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="click-clap-shot" ID="{D958E858-B218-4428-B083-282EBDDD0E77}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{F58CCACE-66AF-431E-BA35-6E7C1E488836}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{72B4CF1A-50E6-479F-B962-97E222A78C5E}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="739.484396200814"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Game_Over" ID="{8B96506D-1B8E-44AA-9226-FC4F315C90EC}" ShortID="561618168">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Game_Over" ID="{12E81D0C-B768-47F0-84B2-83F7B9D33E1F}" ShortID="270577015">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{060C7DA7-BB4D-4716-83AF-AF10355ABB7D}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Game_Over" ID="{E59DD55C-99CE-4F1E-AE07-F22ACB34EC3A}">
+											<Language>SFX</Language>
+											<AudioFile>Game_Over.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="405178947"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{DD70507F-56C1-4F09-9A5B-FD4E5B9438C5}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Game_Over" ID="{E0BF17B2-593E-46CE-8C49-1E69231FD579}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="2037.55102040816"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Game_Over" ID="{E59DD55C-99CE-4F1E-AE07-F22ACB34EC3A}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{E325923A-F8D8-401E-A4F2-3B03B92317F1}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{C7AA3A4A-D0F8-4E9D-9932-9AF5DE82FA3C}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="1000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Rumble" ID="{69C9C2E5-62C9-4CCA-8DAD-FC2AE802D1AD}" ShortID="531648499">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Rumble" ID="{5A8FBF63-786A-4195-A883-3945596F09A3}" ShortID="766660180">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{65C4A8E8-5573-4C72-8111-A9BED9827DCF}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Rumble" ID="{6A03AC2F-863D-48A4-8D94-55A29C31EE22}">
+											<Language>SFX</Language>
+											<AudioFile>Rumble.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="989477830"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{8A582EF9-61F3-4FA7-8E55-550E162D8B83}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Rumble" ID="{81BF600A-4C07-4DE8-8533-7B2D7361633C}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="2899.59183673469"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Rumble" ID="{6A03AC2F-863D-48A4-8D94-55A29C31EE22}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{A0531C1E-A755-4156-964E-8ADF0F4B78A3}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{B8000E35-1D20-4DA3-AD3B-10D508DBE893}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="2123.47354138399"/>
+												</PropertyList>
+											</MusicCue>
 										</Local>
 									</Reference>
 								</ObjectList>

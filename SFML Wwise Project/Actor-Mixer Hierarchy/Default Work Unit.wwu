@@ -139,6 +139,108 @@
 						<ActiveSource Name="click-clap-shot" ID="{DEDAFC11-EB94-4505-8F61-AD7E8D3A24B6}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="EnemyBuzz" ID="{3F2FAF5E-697D-4A42-8A56-B2177C4048C6}" ShortID="165299593">
+					<PropertyList>
+						<Property Name="EnableAttenuation" Type="bool" Value="False"/>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="EnemyBuzz" ID="{8DC7390A-A98B-4620-A7F6-AD51D79B00FD}">
+							<PropertyList>
+								<Property Name="LoopEnd" Type="Real64" Value="2.00645486995152"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>EnemyBuzz.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="77148964"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<PositioningInfo>
+						<Panner Name="" ID="{0628D32F-AAF5-4232-B0A7-B5EF45A9FCD8}"/>
+					</PositioningInfo>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{79C838D2-4C2F-46B1-A4A5-2C90B260594D}" ShortID="280241097">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="EnemyDistance" ID="{A1B8AE9C-241E-4332-AAAB-3A74C7E654CB}" WorkUnitID="{14DD4864-9860-40DC-B091-7C40DB99DC98}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{4A7A0F46-1A4A-4B42-89AF-7F50C9168438}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>-800</XPos>
+																<YPos>-200</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>-176.40123</XPos>
+																<YPos>-13.61417</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>-61.3559299999999</XPos>
+																<YPos>-2.47365</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>-2.35987</XPos>
+																<YPos>-0.05345</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>103.83481</XPos>
+																<YPos>-1.95208</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>138.519272280348</XPos>
+																<YPos>-5.8466885694671</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>174.75551</XPos>
+																<YPos>-13.61417</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>800</XPos>
+																<YPos>-200</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
+					<ActiveSourceList>
+						<ActiveSource Name="EnemyBuzz" ID="{8DC7390A-A98B-4620-A7F6-AD51D79B00FD}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

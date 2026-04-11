@@ -10,11 +10,19 @@
     "Type": "User",
     "GUID": "{BCA03C79-C237-41A9-83FF-0657CAD6FB11}",
     "Language": "SFX",
-    "Hash": "{47E2EC3E-053C-D35F-E9F8-166A1744D4E8}",
+    "Hash": "{99942D69-ED09-6729-DC6A-BEEFE208086F}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainSoundbank",
     "ShortName": "MainSoundbank",
     "Path": "MainSoundbank.bnk",
     "Media": [
+     {
+      "Id": "77148964",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "EnemyBuzz.wav",
+      "CachePath": "61/{61CC2F41-5F28-8D84-B305-4FB0A4E44555}.wem"
+     },
      {
       "Id": "121033550",
       "Language": "SFX",
@@ -48,6 +56,22 @@
       "CachePath": "9B/{9BE0CE1E-501A-00D2-BAB2-F43FFBAB6213}.wem"
      },
      {
+      "Id": "405178947",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Game_Over.wav",
+      "CachePath": "51/{51647B75-4F55-6540-662E-04ECBE3DBD60}.wem"
+     },
+     {
+      "Id": "665522549",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "click-clap-shot.wav",
+      "CachePath": "31/{315CF1D6-9021-C4A3-1B91-218F8BFC8E22}.wem"
+     },
+     {
       "Id": "776372050",
       "Language": "SFX",
       "Streaming": "false",
@@ -62,6 +86,14 @@
       "Location": "Memory",
       "ShortName": "shamanic-grooves-uptempo-with-claps_150bpm.wav",
       "CachePath": "72/{72FDCA37-2B28-0047-F377-86079A949917}.wem"
+     },
+     {
+      "Id": "989477830",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Rumble.wav",
+      "CachePath": "BF/{BF57AE93-C29F-4152-938E-636D09EFE2EB}.wem"
      }
     ],
     "Events": [
@@ -74,6 +106,18 @@
       "MediaRefs": [
        {
         "Id": "289515245"
+       }
+      ]
+     },
+     {
+      "Id": "2686419341",
+      "Name": "Play_EnemyBuzz",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_EnemyBuzz",
+      "GUID": "{3CEA201E-76C2-4A39-8DF0-2C3FDA699C86}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "77148964"
        }
       ]
      },
@@ -119,7 +163,16 @@
         "Id": "289515245"
        },
        {
+        "Id": "405178947"
+       },
+       {
+        "Id": "665522549"
+       },
+       {
         "Id": "818694966"
+       },
+       {
+        "Id": "989477830"
        }
       ]
      },
@@ -136,6 +189,16 @@
         "Id": "392648902"
        }
       ]
+     },
+     {
+      "Id": "3153713143",
+      "Name": "Stop_EnemyBuzz",
+      "ObjectPath": "\\Events\\Default Work Unit\\Stop_EnemyBuzz",
+      "GUID": "{97624BD6-1DF6-4AE1-9476-78663F53AB12}",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
      }
     ],
     "GameParameters": [
@@ -144,10 +207,36 @@
       "Name": "GameSpeed",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\GameSpeed",
       "GUID": "{241D83F9-BDE6-46E8-BA76-DC7D796A3D24}"
+     },
+     {
+      "Id": "2342121374",
+      "Name": "EnemyDistance",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\EnemyDistance",
+      "GUID": "{A1B8AE9C-241E-4332-AAAB-3A74C7E654CB}"
+     }
+    ],
+    "Triggers": [
+     {
+      "Id": "232665398",
+      "Name": "Obstacle_Spawned_Stinger",
+      "ObjectPath": "\\Triggers\\Default Work Unit\\Obstacle_Spawned_Stinger",
+      "GUID": "{77D3A547-EFCC-4939-8E28-1A1CCCC63EED}"
+     },
+     {
+      "Id": "3812729199",
+      "Name": "Game_Over_Stinger",
+      "ObjectPath": "\\Triggers\\Default Work Unit\\Game_Over_Stinger",
+      "GUID": "{C82C57E4-20BE-43E1-8B5E-5F4D53F9CBD0}"
+     },
+     {
+      "Id": "4111647225",
+      "Name": "Rumble_Stinger",
+      "ObjectPath": "\\Triggers\\Default Work Unit\\Rumble_Stinger",
+      "GUID": "{A398E2D2-FC7F-4515-BC40-148B616CA790}"
      }
     ]
    }
   ],
-  "FileHash": "{553DDD61-F06A-36AA-DEF0-E5103F2D4F58}"
+  "FileHash": "{C3BE998D-6BDB-60C4-AAE4-F37685FD0FD1}"
  }
 }

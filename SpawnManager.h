@@ -1,41 +1,35 @@
 #pragma once
 #include <vector>
+#include <SFML/Graphics.hpp>
 #include "Obstacle.h"
 #include "Platform.h"
-
-struct SpawnEntry
-{
-    sf::FloatRect bounds;
-    bool isOnPlatform;
-};
 
 class SpawnManager
 {
 public:
-    SpawnManager(float obstacleSpeed, float platformSpeed);
+    SpawnManager(float obstacleSpeed, float platformSpeed, uint64_t playerID);
 
     void update(float deltaTime, float gameSpeed,
-        std::vector<Obstacle>& obstacles,
-        std::vector<Platform>& platforms, 
+        std::vector<Obstacle>& obstaclePool,
+        std::vector<Platform>& platforms,
         float floorY);
 
 private:
-    int obstacleID = 1000;
-    float m_obstacleSpeed;
-    float m_platformSpeed;
-
-    float m_obstacleTimer;
-    float m_platformTimer;
-
-    const float m_obstacleSpawnTime = 2.0f;
-    const float m_platformSpawnTime = 3.0f;
-    const float m_minSpacing = 80.f;   // min horizontal gap between any two spawns
-    const float m_spawnX = 900.f;
-
     bool isTooClose(sf::FloatRect newBounds,
-        const std::vector<Obstacle>& obstacles,
+        const std::vector<Obstacle>& obstaclePool,
         const std::vector<Platform>& platforms) const;
 
-    // Returns the top-Y of a platform near spawnX, or -1 if none found
     float findNearbyPlatformTop(const std::vector<Platform>& platforms) const;
+
+    float m_obstacleSpeed;
+    float m_platformSpeed;
+    float m_obstacleTimer;
+    float m_platformTimer;
+    uint64_t m_playerID;
+
+    const float m_spawnX = 900.f;
+    const float m_obstacleSpawnTime = 2.0f;
+    const float m_platformSpawnTime = 3.0f;
+    const float m_minSpacing = 150.f;
+    int obstacleID = 0;
 };

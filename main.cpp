@@ -45,7 +45,7 @@ int main()
         return 1;
     }
 
-    const uint64_t playerID = 1;
+    const uint64_t playerID = 0;
     AK::SoundEngine::RegisterGameObj(playerID);
 
     sf::RenderWindow window(sf::VideoMode({ 800,400 }), "Endless Runner Prototype");
@@ -74,18 +74,25 @@ int main()
     ceiling.setPosition({ -50,-110 });
     ceiling.setFillColor(sf::Color(40, 40, 40));
     ceiling.setOutlineThickness(-5);
-    ceiling.setOutlineColor(sf::Color(100, 100, 100)); 
+    ceiling.setOutlineColor(sf::Color(100, 100, 100));
+
     // PARALLAX
     ParallaxBackground background;
     background.addLayer(20.f, 800.f, 320.f, sf::Color(15, 15, 15));
     background.addLayer(40.f, 800.f, 320.f, sf::Color(35, 35, 35));
     background.addLayer(80.f, 800.f, 320.f, sf::Color(60, 60, 60));
 
-    // OBSTACLES & PLATFORMS
-    std::vector<Obstacle> obstacles;
-    std::vector<Platform> platforms;
+    // OBSTACLE POOL - 6 obstacles, registered once, reused forever
+    const int POOL_SIZE = 6;
+    std::vector<Obstacle> obstaclePool(POOL_SIZE);
+    for (int i = 0; i < POOL_SIZE; i++)
+        obstaclePool[i].init(100 + i, playerID);
 
-    SpawnManager spawnManager(300.f, 300.f);
+    // PLATFORMS
+    std::vector<Platform> platforms;
+    platforms.reserve(16);
+
+    SpawnManager spawnManager(300.f, 300.f, playerID);
 
     // SPEED
     float gameSpeed = 1.2f;
@@ -119,10 +126,8 @@ int main()
 
     sf::Clock clock;
 
-
     AK::SoundEngine::SetDefaultListeners(&playerID, 1);
     AK::SoundEngine::SetListeners(playerID, &playerID, 1);
-
 
     AK::SoundEngine::PostEvent(AKTEXT("PlayLayered"), playerID);
 
@@ -139,18 +144,17 @@ int main()
     float floorOffset = 0.f;
     float lastFloorOffset = 0.f;
 
-
     float floorSquishY = floorOriginalY - squishAmount;
     float ceilingSquishY = ceilingOriginalY + squishAmount;
 
     bool onPlatform = false;
 
-
     while (window.isOpen())
     {
         float deltaTime = clock.restart().asSeconds();
         onPlatform = false;
-        // EVENTS
+
+        // INPUT EVENTS
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -165,16 +169,16 @@ int main()
 
                     if (keyPressed->scancode == sf::Keyboard::Scancode::R)
                     {
-                        // RESET GAME
+                        // RESET - just deactivate all pool slots, no unregister
+                        for (auto& o : obstaclePool)
+                            if (o.active) o.deactivate();
+
+                        platforms.clear();
                         player.setPosition({ 100, 300 });
                         velocityY = 0;
                         onGround = true;
-
-                        obstacles.clear();
-                        platforms.clear();
                         score = 0;
-                        gameSpeed = 1.0f;
-
+                        gameSpeed = 1.2f;
                         gameState = GameState::Playing;
                     }
                 }
@@ -193,116 +197,63 @@ int main()
             }
         }
 
-        // GAMEPLAY ONLY UPDATES WHEN PLAYING
+        // GAMEPLAY UPDATE
         if (gameState == GameState::Playing)
         {
-            //EVENTS
+            // RANDOM EVENT TIMER
             randomEventTimer -= deltaTime;
-
             if (currentEvent == CurrentEvent::None && randomEventTimer <= 0.f)
             {
                 currentEvent = CurrentEvent::Squish;
+                AK::SoundEngine::PostTrigger(AKTEXT("Rumble_Stinger"), playerID);
             }
 
-            if (currentEvent == CurrentEvent::Squish)
-            {
-
-
-                // Lerp toward squish positions
-                float newFloorY = lerp(floor.getPosition().y, floorSquishY, deltaTime * squishSpeed);
-                float newCeilingY = lerp(ceiling.getPosition().y, ceilingSquishY, deltaTime * squishSpeed);
-
-                floor.setPosition(sf::Vector2f(floor.getPosition().x, newFloorY));
-                ceiling.setPosition(sf::Vector2f(ceiling.getPosition().x, newCeilingY));
-
-                // Check if close enough to target
-                if (std::abs(newFloorY - floorSquishY) < 0.5f &&
-                    std::abs(newCeilingY - ceilingSquishY) < 0.5f)
-                {
-                    currentEvent = CurrentEvent::SquishStay;
-                }
-
-                floorOffset = newFloorY - floorOriginalY;
-
-            }
-            else if (currentEvent == CurrentEvent::SquishStay)
-            {
-                squishStayTime -= deltaTime;
-
-                if (squishStayTime <= 0.f)
-                {
-                    currentEvent = CurrentEvent::SquishReverse;
-
-                    squishStayTime = squishStayOriginalTime;
-                }
-            }
-
-            else if (currentEvent == CurrentEvent::SquishReverse)
-            {
-                // Lerp back to original positions
-                float newFloorY = lerp(floor.getPosition().y, floorOriginalY, deltaTime * squishSpeed);
-                float newCeilingY = lerp(ceiling.getPosition().y, ceilingOriginalY, deltaTime * squishSpeed);
-
-                floor.setPosition(sf::Vector2f(floor.getPosition().x, newFloorY));
-                ceiling.setPosition(sf::Vector2f(ceiling.getPosition().x, newCeilingY));
-
-                // Check if close enough to original
-                if (std::abs(newFloorY - floorOriginalY) < 0.5f &&
-                    std::abs(newCeilingY - ceilingOriginalY) < 0.5f)
-                {
-                    currentEvent = CurrentEvent::None;
-                    randomEventTimer = originalEventTimer + rand() % 15; // random 5–10 seconds
-                }
-
-                floorOffset = newFloorY - floorOriginalY;
-            }
-            // --- SQUISH EVENT ---
+            // SQUISH EVENT STATE MACHINE
             float oldFloorY = floor.getPosition().y;
             float oldCeilingY = ceiling.getPosition().y;
 
-            if (currentEvent == CurrentEvent::Squish)
+            switch (currentEvent)
+            {
+            case CurrentEvent::Squish:
             {
                 float newFloorY = lerp(oldFloorY, floorSquishY, deltaTime * squishSpeed);
                 float newCeilingY = lerp(oldCeilingY, ceilingSquishY, deltaTime * squishSpeed);
-
                 floor.setPosition({ floor.getPosition().x, newFloorY });
                 ceiling.setPosition({ ceiling.getPosition().x, newCeilingY });
-
                 if (std::abs(newFloorY - floorSquishY) < 0.5f &&
                     std::abs(newCeilingY - ceilingSquishY) < 0.5f)
-                {
                     currentEvent = CurrentEvent::SquishStay;
-                }
+                break;
             }
-            else if (currentEvent == CurrentEvent::SquishStay)
+            case CurrentEvent::SquishStay:
             {
                 squishStayTime -= deltaTime;
-
                 if (squishStayTime <= 0.f)
                 {
+                    AK::SoundEngine::PostTrigger(AKTEXT("Rumble_Stinger"), playerID);
                     currentEvent = CurrentEvent::SquishReverse;
                     squishStayTime = squishStayOriginalTime;
                 }
+                break;
             }
-            else if (currentEvent == CurrentEvent::SquishReverse)
+            case CurrentEvent::SquishReverse:
             {
                 float newFloorY = lerp(oldFloorY, floorOriginalY, deltaTime * squishSpeed);
                 float newCeilingY = lerp(oldCeilingY, ceilingOriginalY, deltaTime * squishSpeed);
-
                 floor.setPosition({ floor.getPosition().x, newFloorY });
                 ceiling.setPosition({ ceiling.getPosition().x, newCeilingY });
-
                 if (std::abs(newFloorY - floorOriginalY) < 0.5f &&
                     std::abs(newCeilingY - ceilingOriginalY) < 0.5f)
                 {
                     currentEvent = CurrentEvent::None;
                     randomEventTimer = originalEventTimer + rand() % 15;
                 }
+                break;
+            }
+            default: break;
             }
 
-            // --- COMPUTE OFFSET ---
             floorOffset = floor.getPosition().y - floorOriginalY;
-
 
             // SCORE
             score += deltaTime * (scoreIncreaseAmount * gameSpeed);
@@ -310,104 +261,72 @@ int main()
 
             // SPEED
             gameSpeed += deltaTime * speedIncreaseRate;
-            if (gameSpeed > maxSpeed)
-                gameSpeed = maxSpeed;
-
+            if (gameSpeed > maxSpeed) gameSpeed = maxSpeed;
             speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
             speedText.setPosition({ 650,10 });
-
             AK::SoundEngine::SetRTPCValue("GameSpeed", gameSpeed, playerID);
 
             // PLAYER PHYSICS
             velocityY += gravity * deltaTime;
             player.move({ 0, velocityY * deltaTime });
 
-            //Floor Collision
+            AkSoundPosition playerPos;
+            playerPos.SetPosition(player.getPosition().x, 0, 0);
+            AK::SoundEngine::SetPosition(playerID, playerPos);
+
+            // Floor & ceiling collision
             if (!onPlatform)
             {
                 float floorY = floor.getPosition().y;
                 float playerBottom = player.getPosition().y + player.getSize().y;
-
                 if (playerBottom >= floorY)
                 {
-                    player.setPosition({
-                        player.getPosition().x,
-                        floorY - player.getSize().y
-                        });
-
+                    player.setPosition({ player.getPosition().x, floorY - player.getSize().y });
                     velocityY = 0;
                     onGround = true;
                 }
-
                 float ceilingBottom = ceiling.getPosition().y + ceiling.getSize().y;
-                float playerTop = player.getPosition().y;
-
-                if (playerTop <= ceilingBottom)
+                if (player.getPosition().y <= ceilingBottom)
                 {
-                    // Snap player just below the ceiling
-                    player.setPosition({
-                        player.getPosition().x,
-                        ceilingBottom
-                        });
-
+                    player.setPosition({ player.getPosition().x, ceilingBottom });
                     velocityY = 0;
                 }
-
             }
 
-
-            // SPAWN MANAGER
-            spawnManager.update(deltaTime, gameSpeed, obstacles, platforms, floor.getPosition().y);
-
+            // SPAWNING
+            spawnManager.update(deltaTime, gameSpeed, obstaclePool, platforms, floor.getPosition().y);
 
             // UPDATE OBSTACLES
-            for (auto& obstacle : obstacles)
+            for (auto& obstacle : obstaclePool)
             {
-                obstacle.update(deltaTime, gameSpeed, 300.f);
+                if (!obstacle.active) continue;
 
-                // Move with floor squish offset
+                obstacle.update(deltaTime, gameSpeed, 300.f, player.getPosition().x);
                 obstacle.shape.move({ 0, floorOffset - lastFloorOffset });
 
+                // Snap to platform top if aligned
                 sf::FloatRect ob = obstacle.getBounds();
-
-                float obLeft = ob.position.x;
-                float obRight = ob.position.x + ob.size.x;
-
                 for (auto& platform : platforms)
                 {
                     sf::FloatRect pb = platform.getBounds();
-
-                    float platLeft = pb.position.x;
-                    float platRight = pb.position.x + pb.size.x;
-                    float platTop = pb.position.y;
-
-                    bool horizontallyAligned =
-                        obRight > platLeft &&
-                        obLeft < platRight;
-
-                    if (horizontallyAligned)
+                    bool aligned = (ob.position.x + ob.size.x > pb.position.x &&
+                        ob.position.x < pb.position.x + pb.size.x);
+                    if (aligned)
                     {
-                        obstacle.shape.setPosition({
-                            ob.position.x,
-                            platTop - ob.size.y
-                            });
-
+                        obstacle.shape.setPosition({ ob.position.x, pb.position.y - ob.size.y });
                         break;
                     }
                 }
             }
 
-
-
             // UPDATE PLATFORMS
-            for (auto& platform : platforms) {
+            for (auto& platform : platforms)
+            {
                 platform.update(deltaTime, gameSpeed, 300.f);
-                platform.shape.move(sf::Vector2f(0, floorOffset - lastFloorOffset));
-
+                platform.shape.move({ 0, floorOffset - lastFloorOffset });
             }
-            lastFloorOffset = floorOffset;
 
-            // UPDATE BACKGROUND
+            lastFloorOffset = floorOffset;
             background.update(deltaTime, gameSpeed);
 
             // PLATFORM COLLISION
@@ -415,14 +334,12 @@ int main()
             {
                 auto playerBounds = player.getGlobalBounds();
                 auto platformBounds = platform.getBounds();
-
                 if (playerBounds.findIntersection(platformBounds))
                 {
                     float playerBottom = playerBounds.position.y + playerBounds.size.y;
                     float playerTop = playerBounds.position.y;
                     float platTop = platformBounds.position.y;
                     float platBottom = platformBounds.position.y + platformBounds.size.y;
-
                     float prevBottom = playerBottom - velocityY * deltaTime;
                     float prevTop = playerTop - velocityY * deltaTime;
 
@@ -440,37 +357,29 @@ int main()
                     }
                     else
                     {
-                        AK::SoundEngine::PostEvent(AKTEXT("Play_Hit"), playerID);
+                        AK::SoundEngine::PostTrigger(AKTEXT("Game_Over_Stinger"), playerID);
                         gameState = GameState::GameOver;
                     }
                 }
             }
 
             // OBSTACLE COLLISION
-            for (auto& obstacle : obstacles)
+            for (auto& obstacle : obstaclePool)
             {
+                if (!obstacle.active) continue;
                 if (player.getGlobalBounds().findIntersection(obstacle.getBounds()))
                 {
-                    AK::SoundEngine::PostEvent(AKTEXT("Play_Hit"), playerID);
+                    AK::SoundEngine::PostTrigger(AKTEXT("Game_Over_Stinger"), playerID);
                     gameState = GameState::GameOver;
                 }
             }
 
-            // REMOVE OFFSCREEN OBSTACLES
-            obstacles.erase(
-                std::remove_if(obstacles.begin(), obstacles.end(),
-                    [](Obstacle& o) { return o.isOffScreen(); }),
-                obstacles.end()
-            );
-
-            // REMOVE OFFSCREEN PLATFORMS
+            // REMOVE OFFSCREEN PLATFORMS (obstacles deactivate themselves in update)
             platforms.erase(
                 std::remove_if(platforms.begin(), platforms.end(),
                     [](Platform& p) { return p.isOffScreen(); }),
                 platforms.end()
             );
-
-
         }
 
         // AUDIO
@@ -478,13 +387,12 @@ int main()
 
         // DRAW
         window.clear(sf::Color::Black);
-
         background.draw(window);
         window.draw(floor);
         window.draw(ceiling);
         window.draw(player);
 
-        for (auto& obstacle : obstacles)
+        for (auto& obstacle : obstaclePool)
             obstacle.draw(window);
 
         for (auto& platform : platforms)
@@ -499,7 +407,10 @@ int main()
         window.display();
     }
 
-    wwise.terminateSoundEngine();
+    // Unregister pool on exit
+    for (auto& o : obstaclePool)
+        AK::SoundEngine::UnregisterGameObj(o.m_audioID);
 
+    wwise.terminateSoundEngine();
     return 0;
 }

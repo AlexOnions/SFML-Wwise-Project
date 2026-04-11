@@ -10,6 +10,13 @@
 						<Property Name="Min" Type="Real64" Value="1"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="EnemyDistance" ID="{A1B8AE9C-241E-4332-AAAB-3A74C7E654CB}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="800"/>
+						<Property Name="Min" Type="Real64" Value="-800"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

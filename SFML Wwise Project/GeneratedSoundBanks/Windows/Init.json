@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{C22AEA01-4C5C-AA91-8FC2-4F0B6F84B541}",
+    "Hash": "{3238EE34-AFA1-829F-763F-D9992E9890F5}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -48,10 +48,32 @@
       "Name": "GameSpeed",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\GameSpeed",
       "GUID": "{241D83F9-BDE6-46E8-BA76-DC7D796A3D24}"
+     },
+     {
+      "Id": "2342121374",
+      "Name": "EnemyDistance",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\EnemyDistance",
+      "GUID": "{A1B8AE9C-241E-4332-AAAB-3A74C7E654CB}"
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "3572204935",
+      "Name": "SecondBaseSwitchGroup",
+      "ObjectPath": "\\Switches\\Default Work Unit\\SecondBaseSwitchGroup",
+      "GUID": "{E2666A80-248C-40F3-ADB3-8AC531B56C8E}",
+      "Switches": []
+     },
+     {
+      "Id": "3916216911",
+      "Name": "BaseSwitchGroup",
+      "ObjectPath": "\\Switches\\Default Work Unit\\BaseSwitchGroup",
+      "GUID": "{3DFBE36C-3342-46AE-B543-7B92DA96C389}",
+      "Switches": []
      }
     ]
    }
   ],
-  "FileHash": "{43F40C22-6597-FCFD-1B34-0948ED5F9F41}"
+  "FileHash": "{DD09F190-0E0C-29E6-2F1E-A92E725F1849}"
  }
 }

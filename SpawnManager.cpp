@@ -1,17 +1,19 @@
 #include "SpawnManager.h"
 #include <cstdlib>
+#include <iostream>
 
-SpawnManager::SpawnManager(float obstacleSpeed, float platformSpeed)
+SpawnManager::SpawnManager(float obstacleSpeed, float platformSpeed, uint64_t playerID)
     : m_obstacleSpeed(obstacleSpeed)
     , m_platformSpeed(platformSpeed)
-    , m_obstacleTimer(-1.5f)   // matches your original delay
+    , m_obstacleTimer(-1.5f)
     , m_platformTimer(0.f)
+    , m_playerID(playerID)
 {
 }
 
 void SpawnManager::update(float deltaTime, float gameSpeed,
-    std::vector<Obstacle>& obstacles,
-    std::vector<Platform>& platforms, 
+    std::vector<Obstacle>& obstaclePool,
+    std::vector<Platform>& platforms,
     float floorY)
 {
     m_obstacleTimer += deltaTime * gameSpeed;
@@ -21,38 +23,57 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
     if (m_platformTimer > m_platformSpawnTime)
     {
         m_platformTimer = 0;
-
         Platform candidate(m_spawnX, floorY);
         sf::FloatRect candidateBounds = candidate.getBounds();
-
-        if (!isTooClose(candidateBounds, obstacles, platforms))
+        if (!isTooClose(candidateBounds, obstaclePool, platforms))
             platforms.push_back(std::move(candidate));
     }
-    if (gameSpeed > 1.15f) {
-        // --- SPAWN OBSTACLE ---
-        if (m_obstacleTimer > m_obstacleSpawnTime)
+
+    // --- SPAWN OBSTACLE ---
+    if (gameSpeed > 1.15f && m_obstacleTimer > m_obstacleSpawnTime)
+    {
+        m_obstacleTimer = 0;
+
+        // Find an inactive pool slot
+        Obstacle* slot = nullptr;
+        for (auto& o : obstaclePool)
         {
-            m_obstacleTimer = 0;
-            obstacleID++;
-            // 30% chance to place obstacle on top of a nearby platform
-            float platTop = findNearbyPlatformTop(platforms);
-            bool onPlatform = (platTop > 0.f) && (rand() % 10 < 3);
+            if (!o.active)
+            {
+                slot = &o;
+                break;
+            }
+        }
 
-            Obstacle candidate(m_spawnX, onPlatform ? platTop : -1.f, gameSpeed, obstacleID,floorY);
-            sf::FloatRect candidateBounds = candidate.getBounds();
+        if (slot == nullptr)
+        {
+            std::cout << "Obstacle pool exhausted, skipping spawn." << std::endl;
+            return;
+        }
 
-            if (!isTooClose(candidateBounds, obstacles, platforms))
-                obstacles.push_back(std::move(candidate));
+        float platTop = findNearbyPlatformTop(platforms);
+        bool onPlatform = (platTop > 0.f) && (rand() % 10 < 3);
+        float spawnY = onPlatform ? platTop : -1.f;
+
+        // Check spacing using a temporary bounds estimate
+        sf::RectangleShape tempShape({ 50, 50 });
+        tempShape.setPosition({ m_spawnX, 0.f });
+        sf::FloatRect candidateBounds = tempShape.getGlobalBounds();
+
+        if (!isTooClose(candidateBounds, obstaclePool, platforms))
+        {
+            slot->activate(m_spawnX, spawnY, gameSpeed, floorY);
         }
     }
 }
 
 bool SpawnManager::isTooClose(sf::FloatRect newBounds,
-    const std::vector<Obstacle>& obstacles,
+    const std::vector<Obstacle>& obstaclePool,
     const std::vector<Platform>& platforms) const
 {
-    for (const auto& o : obstacles)
+    for (const auto& o : obstaclePool)
     {
+        if (!o.active) continue;
         sf::FloatRect ob = o.getBounds();
         float gap = newBounds.position.x - (ob.position.x + ob.size.x);
         if (std::abs(gap) < m_minSpacing)
@@ -67,26 +88,18 @@ bool SpawnManager::isTooClose(sf::FloatRect newBounds,
     }
     return false;
 }
+
 float SpawnManager::findNearbyPlatformTop(const std::vector<Platform>& platforms) const
 {
     const float horizontalSnapRange = 250.f;
-
     for (const auto& p : platforms)
     {
-        sf::FloatRect platformBounds = p.getBounds();
-
-        float platLeft = platformBounds.position.x;
-        float platRight = platformBounds.position.x + platformBounds.size.x;
-        float platTop = platformBounds.position.y;
-
-        // Platform must be to the left of spawn point but close enough
+        sf::FloatRect pb = p.getBounds();
         bool horizontallyAligned =
-            platLeft < m_spawnX &&
-            platRight > m_spawnX - horizontalSnapRange;
-
+            pb.position.x < m_spawnX &&
+            pb.position.x + pb.size.x > m_spawnX - horizontalSnapRange;
         if (horizontallyAligned)
-            return platTop; // top of platform
+            return pb.position.y;
     }
-
     return -1.f;
 }

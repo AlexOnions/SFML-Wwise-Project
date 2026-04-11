@@ -1,24 +1,31 @@
 #include "Obstacle.h"
-#include <cstdlib>
 #include "WwiseWrapper.h"
 #include <iostream>
+#include <cstdlib>
 
-
-Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed, int ID, float floorY)
+void Obstacle::init(uint64_t audioID, uint64_t playerID)
 {
-    int type = 0;
-    if (gameSpeed >= 2) {
-         type = rand() % 3;
-    }
-    else if (gameSpeed >= 1.5) {
-        type = rand() % 2;
+    m_audioID = audioID;
+    m_playerID = playerID;
+    active = false;
+    shape.setPosition({ -200.f, 0.f });
 
-    }
+    AK::SoundEngine::RegisterGameObj(m_audioID);
+    AK::SoundEngine::SetListeners(m_audioID, &m_playerID, 1);
+    std::cout << "Pool obstacle registered, audioID: " << m_audioID << std::endl;
+}
+
+void Obstacle::activate(float startX, float platformTopY, float gameSpeed, float floorY)
+{
+    // Pick a random type based on speed
+    int type = 0;
+    if (gameSpeed >= 2.f)      type = rand() % 3;
+    else if (gameSpeed >= 1.5f) type = rand() % 2;
+
     if (type == 0)
     {
         shape.setSize({ 50, 50 });
         shape.setFillColor(sf::Color::Red);
-       
     }
     else if (type == 1)
     {
@@ -32,67 +39,63 @@ Obstacle::Obstacle(float startX, float platformTopY, float gameSpeed, int ID, fl
     }
 
     float y = (platformTopY >= 0.f)
-        ? platformTopY - shape.getSize().y   // sit on top of platform
-        : floorY - shape.getSize().y;         // original ground level
+        ? platformTopY - shape.getSize().y
+        : floorY - shape.getSize().y;
 
-    shape.setPosition({ startX, y  });
-   
+    shape.setPosition({ startX, y });
+    active = true;
+    m_soundPlaying = false;
 
-    m_audioID = ID;
-
-
-
-    // Play the sound immediately when spawned
-    //AK::SoundEngine::PostEvent(AKTEXT("PlayObstacle"), m_audioID);
-
-
-
-}
-Obstacle::~Obstacle()
-{
-    AK::SoundEngine::UnregisterGameObj(m_audioID);
+    std::cout << "Obstacle activated, audioID: " << m_audioID << std::endl;
 }
 
-
-
-void Obstacle::update(float deltaTime, float speedMultiplier, float obstacleSpeed)
+void Obstacle::deactivate()
 {
+    if (m_soundPlaying)
+    {
+        AK::SoundEngine::PostEvent(AKTEXT("Stop_EnemyBuzz"), m_audioID);
+        m_soundPlaying = false;
+    }
+    active = false;
+    shape.setPosition({ -200.f, 0.f });
+    std::cout << "Obstacle deactivated, audioID: " << m_audioID << std::endl;
+}
+
+void Obstacle::update(float deltaTime, float speedMultiplier, float obstacleSpeed, float playerX)
+{
+    if (!active) return;
+
     shape.move({ -obstacleSpeed * deltaTime * speedMultiplier, 0 });
-
 
     float x = shape.getPosition().x;
 
+    // Update RTPC
+    float distance = std::abs(x - playerX);
+    AK::SoundEngine::SetRTPCValue("EnemyDistance", distance, m_audioID);
 
-
-    // -- - AUDIO POSITION UPDATE-- -
-    AkSoundPosition pos;
-
-    pos.SetPosition(shape.getPosition().x, 0, 0);
-    pos.SetOrientation(1, 0, 0, 0, 1, 0);
-    AK::SoundEngine::SetPosition(m_audioID, pos);
-
-    // --- Play sound only when entering the screen ---
-    if (!hasPlayedSound && x < 800 && x + shape.getSize().x > 0)
+    // Play sound once when obstacle enters screen
+    if (!m_soundPlaying && x < 800.f && x + shape.getSize().x > 0.f)
     {
-        AK::SoundEngine::RegisterGameObj(m_audioID);
-     
-        std::cout << "Playing obstacle sound at x = " << x << std::endl;
-        AK::SoundEngine::PostEvent(AKTEXT("PlayObstacle"), m_audioID);
-        hasPlayedSound = true;
+        AK::SoundEngine::PostEvent(AKTEXT("Play_EnemyBuzz"), m_audioID);
+        AK::SoundEngine::PostTrigger(AKTEXT("Obstacle_Spawned_Stinger"), m_playerID);
+        m_soundPlaying = true;
+        std::cout << "Buzz started on audioID: " << m_audioID << std::endl;
     }
 
-
-
+    // Deactivate when offscreen
+    if (isOffScreen())
+        deactivate();
 }
 
 void Obstacle::draw(sf::RenderWindow& window)
 {
-    window.draw(shape);
+    if (active)
+        window.draw(shape);
 }
 
 bool Obstacle::isOffScreen() const
 {
-    return shape.getPosition().x < -100;
+    return shape.getPosition().x < -100.f;
 }
 
 sf::FloatRect Obstacle::getBounds() const
