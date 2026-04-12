@@ -193,33 +193,25 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>-176.40123</XPos>
-																<YPos>-13.61417</YPos>
+																<XPos>-100.64517</XPos>
+																<YPos>-16.63952</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
-																<XPos>-61.3559299999999</XPos>
-																<YPos>-2.47365</YPos>
+																<XPos>-37.17846</XPos>
+																<YPos>-11.65474</YPos>
 																<Flags>0</Flags>
+																<SegmentShape>Exp1</SegmentShape>
 															</Point>
 															<Point>
-																<XPos>-2.35987</XPos>
-																<YPos>-0.05345</YPos>
+																<XPos>-0.35823</XPos>
+																<YPos>0.05345</YPos>
 																<Flags>0</Flags>
+																<SegmentShape>Log2</SegmentShape>
 															</Point>
 															<Point>
-																<XPos>103.83481</XPos>
-																<YPos>-1.95208</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>138.519272280348</XPos>
-																<YPos>-5.8466885694671</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>174.75551</XPos>
-																<YPos>-13.61417</YPos>
+																<XPos>124.38847</XPos>
+																<YPos>-28.68073</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
