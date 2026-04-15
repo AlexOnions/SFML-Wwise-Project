@@ -14,7 +14,6 @@
 					<PropertyList>
 						<Property Name="InitialValue" Type="Real64" Value="0"/>
 						<Property Name="Max" Type="Real64" Value="800"/>
-						<Property Name="Min" Type="Real64" Value="-800"/>
 					</PropertyList>
 				</GameParameter>
 			</ChildrenList>

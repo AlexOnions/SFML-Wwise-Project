@@ -143,6 +143,11 @@
 					<PropertyList>
 						<Property Name="EnableAttenuation" Type="bool" Value="False"/>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-4</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -188,30 +193,19 @@
 														</PropertyList>
 														<PointList>
 															<Point>
-																<XPos>-800</XPos>
+																<XPos>0</XPos>
 																<YPos>-200</YPos>
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>-100.64517</XPos>
-																<YPos>-16.63952</YPos>
-																<Flags>0</Flags>
-															</Point>
-															<Point>
-																<XPos>-37.17846</XPos>
-																<YPos>-11.65474</YPos>
-																<Flags>0</Flags>
-																<SegmentShape>Exp1</SegmentShape>
-															</Point>
-															<Point>
-																<XPos>-0.35823</XPos>
-																<YPos>0.05345</YPos>
+																<XPos>0.001</XPos>
+																<YPos>-4.24375</YPos>
 																<Flags>0</Flags>
 																<SegmentShape>Log2</SegmentShape>
 															</Point>
 															<Point>
-																<XPos>124.38847</XPos>
-																<YPos>-28.68073</YPos>
+																<XPos>225</XPos>
+																<YPos>-200</YPos>
 																<Flags>0</Flags>
 															</Point>
 															<Point>
