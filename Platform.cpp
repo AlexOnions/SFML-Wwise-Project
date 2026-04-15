@@ -3,6 +3,7 @@
 
 Platform::Platform(float startX, float floorY)
 {
+    //Set Platfrom heights and positions
     float width = 120 + rand() % 200;
     float height = 20;
 
@@ -13,7 +14,6 @@ Platform::Platform(float startX, float floorY)
     float maxGap = 120.f;  
 
     float y = floorY - (minGap + rand() % (int)(maxGap - minGap));
-
 
     shape.setPosition({ startX, y });
 }

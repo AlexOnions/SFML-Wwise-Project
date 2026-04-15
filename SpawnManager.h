@@ -15,10 +15,14 @@ public:
         float floorY);
 
 private:
+
+
+    //Checks the positions of all obstacles and platforms, and checkcs new bounds (Obstacles) are too close to tehm
     bool isTooClose(sf::FloatRect newBounds,
         const std::vector<Obstacle>& obstaclePool,
         const std::vector<Platform>& platforms) const;
 
+    //Finds the top of nearby platforms for obstacle placement
     float findNearbyPlatformTop(const std::vector<Platform>& platforms) const;
 
     float m_obstacleSpeed;

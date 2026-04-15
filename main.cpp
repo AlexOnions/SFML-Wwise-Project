@@ -30,14 +30,15 @@ float lerp(float a, float b, float t)
 
 int main()
 {
+    //Initialise soundbanl
     WwiseWrapper wwise;
-
     if (!wwise.initSoundEngine(AKTEXT("SFML Wwise Project/GeneratedSoundBanks/Windows")))
     {
         std::cout << "Could not initialise Wwise. Exiting." << std::endl;
         return 1;
     }
 
+    //Load soundbank
     AkBankID mainBankId;
     if (AK::SoundEngine::LoadBank(AKTEXT("MainSoundbank"), mainBankId) != AK_Success)
     {
@@ -53,7 +54,7 @@ int main()
 
     GameState gameState = GameState::Playing;
 
-    // PLAYER
+    // Player 
     sf::RectangleShape player({ 40,40 });
     player.setFillColor(sf::Color::Cyan);
     player.setPosition({ 100,300 });
@@ -63,52 +64,54 @@ int main()
     const float jumpForce = -700.f;
     bool onGround = true;
 
-    // FLOOR
+    // Floor 
     sf::RectangleShape floor({ 900,150 });
     floor.setPosition({ -50,340 });
     floor.setFillColor(sf::Color(40, 40, 40));
     floor.setOutlineThickness(-5);
     floor.setOutlineColor(sf::Color(100, 100, 100));
 
+    //Ceiling 
     sf::RectangleShape ceiling({ 900,150 });
     ceiling.setPosition({ -50,-110 });
     ceiling.setFillColor(sf::Color(40, 40, 40));
     ceiling.setOutlineThickness(-5);
     ceiling.setOutlineColor(sf::Color(100, 100, 100));
 
-    // PARALLAX
+    // Parralax Background
     ParallaxBackground background;
     background.addLayer(20.f, 800.f, 320.f, sf::Color(15, 15, 15));
     background.addLayer(40.f, 800.f, 320.f, sf::Color(35, 35, 35));
     background.addLayer(80.f, 800.f, 320.f, sf::Color(60, 60, 60));
 
-    // OBSTACLE POOL - 6 obstacles, registered once, reused forever
+    // Obstable piil - 6 obstacles that are registered once then re used (More efficient that creating them each time thye are needed)
     const int POOL_SIZE = 6;
     std::vector<Obstacle> obstaclePool(POOL_SIZE);
     for (int i = 0; i < POOL_SIZE; i++)
         obstaclePool[i].init(100 + i, playerID);
 
-    // PLATFORMS
+    // Platform 
     std::vector<Platform> platforms;
     platforms.reserve(16);
 
     SpawnManager spawnManager(300.f, 300.f, playerID);
 
-    // SPEED
+
+
+    // Font
+    sf::Font font;
+    font.openFromFile("C:/Users/Alexo/source/repos/AlexOnions/SFML-Wwise-Project/SFML Wwise Project/Assets/arial.ttf");
+
+    // Speed 
     float gameSpeed = 1.2f;
     const float maxSpeed = 5.0f;
     const float speedIncreaseRate = 0.01f;
 
-    // FONT
-    sf::Font font;
-    font.openFromFile("C:/Users/Alexo/source/repos/AlexOnions/SFML-Wwise-Project/SFML Wwise Project/Assets/arial.ttf");
-
-    // SPEED TEXT
     sf::Text speedText(font);
     speedText.setCharacterSize(20);
     speedText.setFillColor(sf::Color::White);
 
-    // SCORE
+    // Score
     float score = 0.f;
     float scoreIncreaseAmount = 5;
 
@@ -117,7 +120,7 @@ int main()
     scoreText.setFillColor(sf::Color::White);
     scoreText.setPosition({ 10,10 });
 
-    // GAME OVER TEXT
+    // Game Over
     sf::Text gameOverText(font);
     gameOverText.setCharacterSize(40);
     gameOverText.setFillColor(sf::Color::White);
@@ -131,6 +134,7 @@ int main()
 
     AK::SoundEngine::PostEvent(AKTEXT("PlayLayered"), playerID);
 
+    //Squish Event
     CurrentEvent currentEvent = CurrentEvent::None;
     float originalEventTimer = 5;
     float randomEventTimer = originalEventTimer + rand() % 15;
@@ -154,7 +158,7 @@ int main()
         float deltaTime = clock.restart().asSeconds();
         onPlatform = false;
 
-        // INPUT EVENTS
+        // Input event updates
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -169,7 +173,7 @@ int main()
 
                     if (keyPressed->scancode == sf::Keyboard::Scancode::R)
                     {
-                        // RESET - just deactivate all pool slots, no unregister
+                        // Reset (deactivate all pool slots)
                         for (auto& o : obstaclePool)
                             if (o.active) o.deactivate();
 
@@ -197,7 +201,7 @@ int main()
             }
         }
 
-        // GAMEPLAY UPDATE
+        // Gameplay updates
         if (gameState == GameState::Playing)
         {
             // RANDOM EVENT TIMER
@@ -208,7 +212,7 @@ int main()
                 AK::SoundEngine::PostTrigger(AKTEXT("Rumble_Stinger"), playerID);
             }
 
-            // SQUISH EVENT STATE MACHINE
+            // Squish event updates
             float oldFloorY = floor.getPosition().y;
             float oldCeilingY = ceiling.getPosition().y;
 
@@ -255,18 +259,18 @@ int main()
 
             floorOffset = floor.getPosition().y - floorOriginalY;
 
-            // SCORE
+            // Score
             score += deltaTime * (scoreIncreaseAmount * gameSpeed);
             scoreText.setString("Score: " + std::to_string((int)score));
 
-            // SPEED
+            // Speed
             gameSpeed += deltaTime * speedIncreaseRate;
             if (gameSpeed > maxSpeed) gameSpeed = maxSpeed;
             speedText.setString("Speed: " + std::to_string(gameSpeed).substr(0, 4) + "x");
             speedText.setPosition({ 650,10 });
             AK::SoundEngine::SetRTPCValue("GameSpeed", gameSpeed, playerID);
 
-            // PLAYER PHYSICS
+            // Player physics
             velocityY += gravity * deltaTime;
             player.move({ 0, velocityY * deltaTime });
 
@@ -293,10 +297,10 @@ int main()
                 }
             }
 
-            // SPAWNING
+            // Spawning
             spawnManager.update(deltaTime, gameSpeed, obstaclePool, platforms, floor.getPosition().y);
 
-            // UPDATE OBSTACLES
+            // Update obtacles
             for (auto& obstacle : obstaclePool)
             {
                 if (!obstacle.active) continue;
@@ -319,7 +323,7 @@ int main()
                 }
             }
 
-            // UPDATE PLATFORMS
+            // Update platforms
             for (auto& platform : platforms)
             {
                 platform.update(deltaTime, gameSpeed, 300.f);
@@ -329,7 +333,7 @@ int main()
             lastFloorOffset = floorOffset;
             background.update(deltaTime, gameSpeed);
 
-            // PLATFORM COLLISION
+            // Platform collisions
             for (auto& platform : platforms)
             {
                 auto playerBounds = player.getGlobalBounds();
@@ -363,7 +367,7 @@ int main()
                 }
             }
 
-            // OBSTACLE COLLISION
+            // Obstacle collision
             for (auto& obstacle : obstaclePool)
             {
                 if (!obstacle.active) continue;
@@ -374,7 +378,7 @@ int main()
                 }
             }
 
-            // REMOVE OFFSCREEN PLATFORMS (obstacles deactivate themselves in update)
+            // Remove offscreen platforms 
             platforms.erase(
                 std::remove_if(platforms.begin(), platforms.end(),
                     [](Platform& p) { return p.isOffScreen(); }),
@@ -382,10 +386,10 @@ int main()
             );
         }
 
-        // AUDIO
+        // Audio
         AK::SoundEngine::RenderAudio();
 
-        // DRAW
+        // Draw
         window.clear(sf::Color::Black);
         background.draw(window);
         window.draw(floor);

@@ -16,10 +16,11 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
     std::vector<Platform>& platforms,
     float floorY)
 {
+    //Updating important timers
     m_obstacleTimer += deltaTime * gameSpeed;
     m_platformTimer += deltaTime * gameSpeed;
 
-    // --- SPAWN PLATFORM ---
+    // Spawn Platform
     if (m_platformTimer > m_platformSpawnTime)
     {
         m_platformTimer = 0;
@@ -29,7 +30,7 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
             platforms.push_back(std::move(candidate));
     }
 
-    // --- SPAWN OBSTACLE ---
+    // Spawn Obstacle
     if (gameSpeed > 1.15f && m_obstacleTimer > m_obstacleSpawnTime)
     {
         m_obstacleTimer = 0;
@@ -51,15 +52,17 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
             return;
         }
 
+        //Check if a platform is nearby, if so place the obstacle on top
         float platTop = findNearbyPlatformTop(platforms);
         bool onPlatform = (platTop > 0.f) && (rand() % 10 < 3);
         float spawnY = onPlatform ? platTop : -1.f;
 
-        // Check spacing using a temporary bounds estimate
+        // Check spacing of obstacles and platforms using a temporary bounds estimate
         sf::RectangleShape tempShape({ 50, 50 });
         tempShape.setPosition({ m_spawnX, 0.f });
         sf::FloatRect candidateBounds = tempShape.getGlobalBounds();
 
+        //Activates Obstacle if it isnt too close to another obstacle or platform
         if (!isTooClose(candidateBounds, obstaclePool, platforms))
         {
             slot->activate(m_spawnX, spawnY, gameSpeed, floorY);
@@ -67,6 +70,7 @@ void SpawnManager::update(float deltaTime, float gameSpeed,
     }
 }
 
+//Checks the positions of all obstacles and platforms, and checkcs new bounds (Obstacles) are too close to tehm
 bool SpawnManager::isTooClose(sf::FloatRect newBounds,
     const std::vector<Obstacle>& obstaclePool,
     const std::vector<Platform>& platforms) const
@@ -89,6 +93,7 @@ bool SpawnManager::isTooClose(sf::FloatRect newBounds,
     return false;
 }
 
+//Finds the top of nearby platforms for obstacle placement
 float SpawnManager::findNearbyPlatformTop(const std::vector<Platform>& platforms) const
 {
     const float horizontalSnapRange = 250.f;

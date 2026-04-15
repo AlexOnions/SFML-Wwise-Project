@@ -7,7 +7,7 @@ ParallaxLayer::ParallaxLayer(float scrollSpeed, float windowWidth, float windowH
     width = windowWidth;
 
     int blockCount = 20;
-    float slotWidth = (windowWidth * 2.f) / blockCount;  // divide space into even slots
+    float slotWidth = (windowWidth * 2.f) / blockCount;  //Divide space into even slots
 
     for (int i = 0; i < blockCount; i++)
     {
@@ -16,7 +16,7 @@ ParallaxLayer::ParallaxLayer(float scrollSpeed, float windowWidth, float windowH
 
         // Place block within its slot with some randomness
         float x = i * slotWidth + (rand() % (int)(slotWidth * 0.6f));
-        float y = 50.f + (rand() % (int)(windowHeight - 150));  // keep away from very top/bottom
+        float y = 50.f + (rand() % (int)(windowHeight - 150));  //Keep away from very top/bottom
 
         sf::RectangleShape block(sf::Vector2f(bw, bh));
         block.setFillColor(color);
@@ -38,7 +38,7 @@ void ParallaxLayer::update(float dt, float gameSpeed)
         // When a block scrolls off the left, wrap it to the far right
         if (pos.x + block.getSize().x < 0.f)
         {
-            pos.x = width + (rand() % (int)(width * 0.8f));  // spread respawn across wider range
+            pos.x = width + (rand() % (int)(width * 0.8f));  // Spread respawn across wider range
             pos.y = 50.f + rand() % 300;
         }
         block.setPosition(pos);
