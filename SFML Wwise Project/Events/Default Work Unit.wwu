@@ -25,7 +25,7 @@
 						</Action>
 					</ChildrenList>
 				</Event>
-				<Event Name="PlayLayered" ID="{72C6A068-340A-4931-A434-CC6097A88FBE}">
+				<Event Name="PlayLayeredMusic" ID="{72C6A068-340A-4931-A434-CC6097A88FBE}">
 					<ChildrenList>
 						<Action Name="" ID="{45FF0D85-AA0E-4E38-AD7E-9A7E63AC7BA5}" ShortID="168452593">
 							<ReferenceList>

@@ -132,7 +132,7 @@ int main()
     AK::SoundEngine::SetDefaultListeners(&playerID, 1);
     AK::SoundEngine::SetListeners(playerID, &playerID, 1);
 
-    AK::SoundEngine::PostEvent(AKTEXT("PlayLayered"), playerID);
+    AK::SoundEngine::PostEvent(AKTEXT("PlayLayeredMusic"), playerID);
 
     //Squish Event
     CurrentEvent currentEvent = CurrentEvent::None;

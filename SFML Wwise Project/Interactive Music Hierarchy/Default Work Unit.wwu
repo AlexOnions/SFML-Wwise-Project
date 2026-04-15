@@ -28,67 +28,6 @@
 						</Reference>
 					</ReferenceList>
 				</MusicSwitchContainer>
-				<MusicSegment Name="shamanic-grooves-uptempo-with-claps_150bpm" ID="{172F3965-5914-4D7B-B041-31DA83EDD90E}" ShortID="593758613">
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
-						</Reference>
-					</ReferenceList>
-					<ObjectLists>
-						<ObjectList Name="Cues">
-							<Reference>
-								<Local>
-									<MusicCue Name="Entry Cue" ID="{D02C4306-CFD7-4CE6-B7CB-CBAAC4A24A27}"/>
-								</Local>
-							</Reference>
-							<Reference>
-								<Local>
-									<MusicCue Name="Exit Cue" ID="{F32AB253-9216-4B14-B3B6-59389410D805}">
-										<PropertyList>
-											<Property Name="CueType" Type="int16" Value="1"/>
-											<Property Name="TimeMs" Type="Real64" Value="3200"/>
-										</PropertyList>
-									</MusicCue>
-								</Local>
-							</Reference>
-						</ObjectList>
-					</ObjectLists>
-				</MusicSegment>
-				<MusicSegment Name="simple-drum-beat_112bpm_A_minor" ID="{F1C19688-29FB-4745-8A98-323037FC40A5}" ShortID="115590217">
-					<PropertyList>
-						<Property Name="EndPosition" Type="Real64" Value="8565.39682539683"/>
-					</PropertyList>
-					<ReferenceList>
-						<Reference Name="Conversion">
-							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
-						</Reference>
-						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{95632075-7787-4F59-889D-BC2BBF54DA84}"/>
-						</Reference>
-					</ReferenceList>
-					<ObjectLists>
-						<ObjectList Name="Cues">
-							<Reference>
-								<Local>
-									<MusicCue Name="Entry Cue" ID="{EDC7D64A-C62D-4DEE-A9E5-890CF8AEF134}"/>
-								</Local>
-							</Reference>
-							<Reference>
-								<Local>
-									<MusicCue Name="Exit Cue" ID="{97304B41-A243-4757-8AC0-A64EEB041193}">
-										<PropertyList>
-											<Property Name="CueType" Type="int16" Value="1"/>
-											<Property Name="TimeMs" Type="Real64" Value="8565.39682539683"/>
-										</PropertyList>
-									</MusicCue>
-								</Local>
-							</Reference>
-						</ObjectList>
-					</ObjectLists>
-				</MusicSegment>
 				<MusicPlaylistContainer Name="MainLoopPlaylistContainer" ID="{83D7F2A3-7D38-4E7B-9AC4-26EDEE8ACC59}" ShortID="73300393">
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -110,7 +49,7 @@
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Segment">
-													<ObjectRef Name="LoopSegment" ID="{81A01683-B8A8-4319-8FB0-49B4A2966115}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+													<ObjectRef Name="LoopedMusicSegment" ID="{81A01683-B8A8-4319-8FB0-49B4A2966115}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
 												</Reference>
 											</ReferenceList>
 										</MusicPlaylistItem>
@@ -135,7 +74,7 @@
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<MusicSegment Name="LoopSegment" ID="{81A01683-B8A8-4319-8FB0-49B4A2966115}" ShortID="713008719">
+						<MusicSegment Name="LoopedMusicSegment" ID="{81A01683-B8A8-4319-8FB0-49B4A2966115}" ShortID="713008719">
 							<PropertyList>
 								<Property Name="EndPosition" Type="Real64" Value="3237.8314062387"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
@@ -153,7 +92,7 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<MusicTrack Name="shamanic-grooves-uptempo-with-claps_150bpm" ID="{DE7B7D28-6602-4DD2-90AB-5380E64B59AE}" ShortID="58019989">
+								<MusicTrack Name="UpbeatTemo_Layer3" ID="{DE7B7D28-6602-4DD2-90AB-5380E64B59AE}" ShortID="58019989">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
@@ -315,7 +254,7 @@
 										</ObjectList>
 									</ObjectLists>
 								</MusicTrack>
-								<MusicTrack Name="simple-drum-beat_112bpm_A_minor" ID="{C65FDF1A-3D74-48F5-B0FA-8BC2848F5A0B}" ShortID="454099910">
+								<MusicTrack Name="DrumBeat_Layer2" ID="{C65FDF1A-3D74-48F5-B0FA-8BC2848F5A0B}" ShortID="454099910">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>
@@ -482,7 +421,7 @@
 										</ObjectList>
 									</ObjectLists>
 								</MusicTrack>
-								<MusicTrack Name="459076__ludwigmueller__fx-lumu-cellphone-vibrating-buzzing-huawei-y6-hand-100ms" ID="{EF828F44-5B21-4CB1-9DC1-9F1D7D53FB82}" ShortID="45717485">
+								<MusicTrack Name="BaseBeat_Layer2" ID="{EF828F44-5B21-4CB1-9DC1-9F1D7D53FB82}" ShortID="45717485">
 									<PropertyList>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
@@ -824,7 +763,7 @@
 												</PropertyList>
 												<ReferenceList>
 													<Reference Name="Segment">
-														<ObjectRef Name="Rumble" ID="{69C9C2E5-62C9-4CCA-8DAD-FC2AE802D1AD}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
+														<ObjectRef Name="SquishRumble" ID="{69C9C2E5-62C9-4CCA-8DAD-FC2AE802D1AD}" WorkUnitID="{0271CD3D-815E-4CD6-9E92-141EA847B015}"/>
 													</Reference>
 													<Reference Name="Trigger">
 														<ObjectRef Name="Rumble_Stinger" ID="{A398E2D2-FC7F-4515-BC40-148B616CA790}" WorkUnitID="{0CC1E2F5-2F6C-465D-9ED8-7E20303A462B}"/>
@@ -994,7 +933,7 @@
 											<MusicCue Name="Exit Cue" ID="{C7AA3A4A-D0F8-4E9D-9932-9AF5DE82FA3C}">
 												<PropertyList>
 													<Property Name="CueType" Type="int16" Value="1"/>
-													<Property Name="TimeMs" Type="Real64" Value="1000"/>
+													<Property Name="TimeMs" Type="Real64" Value="2036.63500678426"/>
 												</PropertyList>
 											</MusicCue>
 										</Local>
@@ -1002,7 +941,7 @@
 								</ObjectList>
 							</ObjectLists>
 						</MusicSegment>
-						<MusicSegment Name="Rumble" ID="{69C9C2E5-62C9-4CCA-8DAD-FC2AE802D1AD}" ShortID="531648499">
+						<MusicSegment Name="SquishRumble" ID="{69C9C2E5-62C9-4CCA-8DAD-FC2AE802D1AD}" ShortID="531648499">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB241402-7335-44F0-8B8F-05556E8E147C}"/>

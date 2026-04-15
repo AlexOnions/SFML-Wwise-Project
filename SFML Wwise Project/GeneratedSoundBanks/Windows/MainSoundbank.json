@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{BCA03C79-C237-41A9-83FF-0657CAD6FB11}",
     "Language": "SFX",
-    "Hash": "{E1392177-7A18-A284-E9BC-55171D3E37F0}",
+    "Hash": "{9AEB93A3-8141-C12F-AD8A-573D3CCD35E6}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainSoundbank",
     "ShortName": "MainSoundbank",
     "Path": "MainSoundbank.bnk",
@@ -150,9 +150,9 @@
       ]
      },
      {
-      "Id": "43560053",
-      "Name": "PlayLayered",
-      "ObjectPath": "\\Events\\Default Work Unit\\PlayLayered",
+      "Id": "1026225382",
+      "Name": "PlayLayeredMusic",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayLayeredMusic",
       "GUID": "{72C6A068-340A-4931-A434-CC6097A88FBE}",
       "DurationType": "Infinite",
       "MediaRefs": [
@@ -237,6 +237,6 @@
     ]
    }
   ],
-  "FileHash": "{6AD3EFDD-D8C5-1498-5013-855A189A7875}"
+  "FileHash": "{BE90A6E6-CF57-7F45-F4B0-ADCCF3FF6AAA}"
  }
 }
